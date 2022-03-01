@@ -6,7 +6,6 @@ authors = ["aspfohl <annaspfohl@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.10"
-numpy = "1.19.1"
 numba = "^0.54.0"
 colorama = "0.4.3"
 tbb = "^2021.3.0"
