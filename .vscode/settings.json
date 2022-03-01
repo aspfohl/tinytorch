@@ -1,16 +1,8 @@
 {
+    "breadcrumbs.enabled": true,
     "editor.detectIndentation": false,
     "editor.tabSize": 4,
-    "[python]": {
-        "editor.formatOnSave": true,
-        "editor.rulers": [
-            88
-        ],
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true
-        }
-    },
-    "python.pythonPath": ".venv/bin/python",
+    "editor.minimap.enabled": false,
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
@@ -22,11 +14,43 @@
         "build": true,
         "*.egg-info": true,
     },
-    "python.formatting.provider": "black",
-    "python.testing.unittestEnabled": false,
-    "python.testing.nosetestsEnabled": false,
+    "git.enableSmartCommit": true,
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.rulers": [
+            88
+        ]
+    },
     "python.formatting.blackArgs": [
         "--config",
         "${workspaceFolder}/pyproject.toml"
+    ],
+    "python.linting.lintOnSave": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyArgs": [
+        "--follow-imports=silent",
+        "--show-column-numbers",
+        "--ignore-missing-imports"
+    ],
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        "--config",
+        "${workspaceRoot}/pyproject.toml"
+    ],
+    "python.formatting.provider": "black",
+    "python.pythonPath": ".venv/bin/python",
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "spellright.language": [
+        "en"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext",
+        "python",
+        "sql",
+        "yaml",
     ]
 }

@@ -1,9 +1,8 @@
 import pytest
 from hypothesis import given
 
-from tinytorch import module
-
 from tests.strategies import med_ints, small_floats
+from tinytorch import module
 
 
 class ModuleA1(module.Module):

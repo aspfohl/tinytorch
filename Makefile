@@ -18,14 +18,20 @@ clean_py:
 	find . -name "__pycache__" -delete
 	rm -rf .cache .eggs ${PROJECT_NAME}.egg-info dist build
 
-test: test_unit test_style
+test: test_unit test_format test_style
 
 test_unit:
 	poetry run pytest --cov-report term-missing --cov=${PROJECT_NAME}
 
+test_format:
+	poetry run black --check ${PROJECT_DIRS}
+	poetry run isort --check-only ${PROJECT_DIRS}
+
 test_style:
 	poetry run flake8 ${PROJECT_DIRS}
 	# poetry run darglint ${PROJECT_DIRS}
+	poetry run pylint ${PROJECT_DIRS}
+	poetry run mypy --follow-imports=silent --package ${PROJECT_NAME}
 
 format:
 	poetry run black ${PROJECT_DIRS}

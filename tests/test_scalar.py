@@ -1,11 +1,10 @@
 import pytest
 from hypothesis import given
 
+from tests.strategies import assert_close, small_floats, small_scalars
 from tinytorch import operators
 from tinytorch.scalar import Scalar, central_difference, derivative_check
 from tinytorch.testing import MathTestVariable
-
-from tests.strategies import assert_close, small_floats, small_scalars
 
 
 def test_central_diff():

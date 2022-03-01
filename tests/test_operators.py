@@ -2,6 +2,7 @@ import pytest
 from hypothesis import given
 from hypothesis.strategies import lists
 
+from tests.strategies import assert_close, small_floats
 from tinytorch.operators import (
     add,
     addLists,
@@ -26,8 +27,6 @@ from tinytorch.operators import (
     zipWith,
 )
 from tinytorch.testing import MathTest
-
-from tests.strategies import assert_close, small_floats
 
 
 @given(small_floats, small_floats)

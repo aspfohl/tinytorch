@@ -2,11 +2,10 @@ import numba
 import pytest
 from hypothesis import given, settings
 
+from tests.strategies import tensors
 from tinytorch.cuda import conv as cuda_conv
 from tinytorch.fast import conv as fast_conv
 from tinytorch.tensor.functions import grad_check, tensor
-
-from tests.strategies import tensors
 
 BACKEND = {"fast1": fast_conv.Conv1dFun, "fast2": fast_conv.Conv2dFun}
 backend_1d = [pytest.param("fast")]
