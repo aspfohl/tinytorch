@@ -1,0 +1,22 @@
+{
+    "python.editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "python.linting.flake8Args": ["--rcfile=setup.cfg"],
+    "python.linting.pylintArgs": ["--rcfile=setup.cfg"],
+    "python.pythonPath": "/Users/anna/Git/Cornell-Tech-ML/mle-module-4-aspfohl/.venv/bin/python",
+    "spellright.language": ["en"],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext",
+        "python",
+        "sql",
+        "yaml",
+    ],
+    "editor.rulers": [99],
+    // "editor.codeActionsOnSave": {
+    //     "source.organizeImports": true,
+    // },
+    "python.sortImports.args": ["--profile", "black"],
+    "files.trimTrailingWhitespace": true,
+}

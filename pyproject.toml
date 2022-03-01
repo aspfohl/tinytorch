@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "minitorch"
+version = "0.4.1"
+description = ""
+authors = ["annasmith370 <annalsmith14@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.10"
+numpy = "1.19.1"
+numba = "^0.54.0"
+colorama = "0.4.3"
+tbb = "^2021.3.0"
+networkx = "2.4"
+pydot = "1.4.1"
+streamlit = "0.75.0"
+watchdog = "1.0.2"
+plotly = "4.14.3"
+python-mnist = "^0.7"
+hypothesis = "4.38"
+torch = "^1.9.0"
+jupyter = "^1.0.0"
+beautifulsoup4 = "^4.10.0"
+matplotlib = "^3.4.3"
+datasets = "^1.16.1"
+embeddings = "^0.0.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "6.0.1"
+pytest-env = "^0.6.2"
+pytest-runner = "5.2"
+flake8 = "3.8.3"
+black = "19.10b0"
+pep8-naming = "0.11.1"
+darglint = "^1.8.0"
+pytest-cov = "^2.12.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
