@@ -1,28 +1,30 @@
+ !  ◰³ base  ~/G/a/tinytorch   *+  make test                                                      (base) 2519ms  Tue Mar  1 10:35:46 2022
+poetry run pytest --cov-report term-missing --cov=tinytorch
 ============================================================= test session starts =============================================================
 platform darwin -- Python 3.9.7, pytest-6.0.1, py-1.10.0, pluggy-0.13.1
 hypothesis profile 'default' -> database=DirectoryBasedExampleDatabase('/Users/anna/Git/aspfohl/tinytorch/.hypothesis/examples')
 rootdir: /Users/anna/Git/aspfohl/tinytorch
 plugins: cov-2.12.1, hypothesis-4.38.0, env-0.6.2
-collected 252 items
+collected 251 items
 
 tests/test_autodiff.py ........                                                                                                         [  3%]
 tests/test_conv.py .......                                                                                                              [  5%]
 tests/test_module.py ...x..                                                                                                             [  8%]
-tests/test_nn.py ......                                                                                                                 [ 10%]
+tests/test_nn.py .....                                                                                                                  [ 10%]
 tests/test_operators.py ..................................................                                                              [ 30%]
 tests/test_scalar.py ...........................................                                                                        [ 47%]
-tests/test_tensor.py ......................................................xx....                                                       [ 71%]
-tests/test_tensor_data.py .x.................                                                                                           [ 78%]
-tests/test_tensor_general.py .....................................................                                                      [100%]
+tests/tensor/test_tensor.py ......................................................xx....                                                [ 71%]
+tests/tensor/test_tensor_data.py .x.................                                                                                    [ 78%]
+tests/tensor/test_tensor_general.py .....................................................                                               [100%]
 
 ---------- coverage: platform darwin, python 3.9.7-final-0 -----------
 Name                            Stmts   Miss  Cover   Missing
 -------------------------------------------------------------
-tinytorch/__init__.py              17      0   100%
-tinytorch/autodiff.py             120      1    99%   208
+tinytorch/__init__.py               6      0   100%
+tinytorch/autodiff.py             120      1    99%   205
 tinytorch/cuda/conv.py            112     89    21%   60-98, 115-125, 129-153, 205-255, 272-280, 284-309
 tinytorch/cuda/ops.py             185    158    15%   45-56, 61-73, 100-127, 131-143, 167-194, 201-209, 231-273, 299-314, 346-370, 378-386, 431-467, 486-516
-tinytorch/datasets.py              61     45    26%   7-12, 23-28, 32-37, 41-46, 50-55, 59-65, 69-84
+tinytorch/datasets.py              61     61     0%   1-87
 tinytorch/fast/conv.py            112     51    54%   60-98, 205-255
 tinytorch/fast/ops.py             126     60    52%   46-60, 133-157, 214-234, 312-333
 tinytorch/module.py                79      4    95%   23, 139, 147, 150
@@ -30,16 +32,16 @@ tinytorch/nn.py                    45      0   100%
 tinytorch/operators.py             60      0   100%
 tinytorch/optim.py                 15      9    40%   3, 8-9, 12-14, 17-19
 tinytorch/scalar.py               148      0   100%
-tinytorch/tensor/data.py          133      0   100%
+tinytorch/tensor/data.py          132      0   100%
 tinytorch/tensor/functions.py     239      3    99%   182, 218-219
 tinytorch/tensor/ops.py            71      0   100%
 tinytorch/tensor/tensor.py        121      0   100%
 tinytorch/testing.py              127      3    98%   98, 102, 106
 -------------------------------------------------------------
-TOTAL                            1771    423    76%
+TOTAL                            1759    439    75%
 
 
-================================================= 248 passed, 4 xfailed in 153.33s (0:02:33) ==================================================
+================================================= 247 passed, 4 xfailed in 145.46s (0:02:25) ==================================================
 poetry run flake8 tinytorch tests
 tinytorch/nn.py:15:80: E501 line too long (173 > 79 characters)
 tinytorch/nn.py:31:80: E501 line too long (88 > 79 characters)
@@ -75,7 +77,6 @@ tinytorch/datasets.py:75:6: N806 variable 'X' in function should be lowercase
 tinytorch/datasets.py:76:80: E501 line too long (86 > 79 characters)
 tinytorch/datasets.py:79:6: N806 variable 'X' in function should be lowercase
 tinytorch/datasets.py:80:80: E501 line too long (88 > 79 characters)
-tinytorch/__init__.py:6:1: F811 redefinition of unused 'ops' from line 2
 tinytorch/module.py:11:80: E501 line too long (91 > 79 characters)
 tinytorch/module.py:12:80: E501 line too long (82 > 79 characters)
 tinytorch/module.py:22:1: DAR201 Missing "Returns" in Docstring: - return
@@ -179,28 +180,28 @@ tinytorch/testing.py:82:1: DAR101 Missing parameter(s) in Docstring: - a
 tinytorch/testing.py:82:1: DAR101 Missing parameter(s) in Docstring: - b
 tinytorch/testing.py:82:1: DAR201 Missing "Returns" in Docstring: - return
 tinytorch/testing.py:122:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/autodiff.py:13:80: E501 line too long (110 > 79 characters)
-tinytorch/autodiff.py:14:80: E501 line too long (80 > 79 characters)
-tinytorch/autodiff.py:51:80: E501 line too long (81 > 79 characters)
-tinytorch/autodiff.py:54:80: E501 line too long (90 > 79 characters)
-tinytorch/autodiff.py:66:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/autodiff.py:95:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/autodiff.py:95:1: DAR101 Missing parameter(s) in Docstring: - x
-tinytorch/autodiff.py:114:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/autodiff.py:114:1: DAR101 Missing parameter(s) in Docstring: - x
-tinytorch/autodiff.py:121:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/autodiff.py:121:1: DAR101 Missing parameter(s) in Docstring: - x
-tinytorch/autodiff.py:132:80: E501 line too long (85 > 79 characters)
-tinytorch/autodiff.py:146:80: E501 line too long (80 > 79 characters)
-tinytorch/autodiff.py:174:80: E501 line too long (95 > 79 characters)
-tinytorch/autodiff.py:247:80: E501 line too long (80 > 79 characters)
-tinytorch/autodiff.py:265:80: E501 line too long (111 > 79 characters)
-tinytorch/autodiff.py:269:80: E501 line too long (96 > 79 characters)
-tinytorch/autodiff.py:275:80: E501 line too long (85 > 79 characters)
-tinytorch/autodiff.py:323:80: E501 line too long (89 > 79 characters)
-tinytorch/autodiff.py:325:80: E501 line too long (113 > 79 characters)
-tinytorch/autodiff.py:338:80: E501 line too long (82 > 79 characters)
-tinytorch/autodiff.py:345:80: E501 line too long (92 > 79 characters)
+tinytorch/autodiff.py:10:80: E501 line too long (110 > 79 characters)
+tinytorch/autodiff.py:11:80: E501 line too long (80 > 79 characters)
+tinytorch/autodiff.py:48:80: E501 line too long (81 > 79 characters)
+tinytorch/autodiff.py:51:80: E501 line too long (90 > 79 characters)
+tinytorch/autodiff.py:63:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/autodiff.py:92:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/autodiff.py:92:1: DAR101 Missing parameter(s) in Docstring: - x
+tinytorch/autodiff.py:111:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/autodiff.py:111:1: DAR101 Missing parameter(s) in Docstring: - x
+tinytorch/autodiff.py:118:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/autodiff.py:118:1: DAR101 Missing parameter(s) in Docstring: - x
+tinytorch/autodiff.py:129:80: E501 line too long (85 > 79 characters)
+tinytorch/autodiff.py:143:80: E501 line too long (80 > 79 characters)
+tinytorch/autodiff.py:171:80: E501 line too long (95 > 79 characters)
+tinytorch/autodiff.py:244:80: E501 line too long (80 > 79 characters)
+tinytorch/autodiff.py:262:80: E501 line too long (111 > 79 characters)
+tinytorch/autodiff.py:266:80: E501 line too long (96 > 79 characters)
+tinytorch/autodiff.py:272:80: E501 line too long (85 > 79 characters)
+tinytorch/autodiff.py:320:80: E501 line too long (89 > 79 characters)
+tinytorch/autodiff.py:322:80: E501 line too long (113 > 79 characters)
+tinytorch/autodiff.py:335:80: E501 line too long (82 > 79 characters)
+tinytorch/autodiff.py:342:80: E501 line too long (92 > 79 characters)
 tinytorch/cuda/ops.py:32:1: DAR102 Excess parameter(s) in Docstring: + out
 tinytorch/cuda/ops.py:33:1: DAR102 Excess parameter(s) in Docstring: + out_shape
 tinytorch/cuda/ops.py:34:1: DAR102 Excess parameter(s) in Docstring: + out_strides
@@ -236,7 +237,7 @@ tinytorch/cuda/ops.py:426:1: DAR202 Excess "Returns" in Docstring: + return
 tinytorch/cuda/ops.py:431:6: N806 variable 'BLOCK_DIM' in function should be lowercase
 tinytorch/cuda/ops.py:462:80: E501 line too long (81 > 79 characters)
 tinytorch/cuda/ops.py:467:80: E501 line too long (82 > 79 characters)
-tinytorch/cuda/conv.py:4:80: E501 line too long (80 > 79 characters)
+tinytorch/cuda/conv.py:4:80: E501 line too long (88 > 79 characters)
 tinytorch/cuda/conv.py:76:80: E501 line too long (86 > 79 characters)
 tinytorch/cuda/conv.py:123:80: E501 line too long (80 > 79 characters)
 tinytorch/cuda/conv.py:222:80: E501 line too long (88 > 79 characters)
@@ -279,7 +280,7 @@ tinytorch/fast/ops.py:308:1: DAR202 Excess "Returns" in Docstring: + return
 tinytorch/fast/ops.py:315:80: E501 line too long (92 > 79 characters)
 tinytorch/fast/ops.py:324:80: E501 line too long (88 > 79 characters)
 tinytorch/fast/ops.py:327:80: E501 line too long (93 > 79 characters)
-tinytorch/fast/conv.py:4:80: E501 line too long (80 > 79 characters)
+tinytorch/fast/conv.py:4:80: E501 line too long (88 > 79 characters)
 tinytorch/fast/conv.py:76:80: E501 line too long (86 > 79 characters)
 tinytorch/fast/conv.py:123:80: E501 line too long (80 > 79 characters)
 tinytorch/fast/conv.py:222:80: E501 line too long (88 > 79 characters)
@@ -306,27 +307,25 @@ tinytorch/tensor/functions.py:230:80: E501 line too long (84 > 79 characters)
 tinytorch/tensor/functions.py:238:80: E501 line too long (80 > 79 characters)
 tinytorch/tensor/functions.py:296:80: E501 line too long (80 > 79 characters)
 tinytorch/tensor/functions.py:362:80: E501 line too long (83 > 79 characters)
-tinytorch/tensor/tensor.py:20:80: E501 line too long (90 > 79 characters)
-tinytorch/tensor/tensor.py:63:1: DAR101 Missing parameter(s) in Docstring: - b
-tinytorch/tensor/tensor.py:63:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/tensor/tensor.py:91:1: DAR101 Missing parameter(s) in Docstring: - b
-tinytorch/tensor/tensor.py:91:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/tensor/tensor.py:129:1: DAR101 Missing parameter(s) in Docstring: - dim
-tinytorch/tensor/tensor.py:129:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/tensor/tensor.py:133:1: DAR101 Missing parameter(s) in Docstring: - dim
-tinytorch/tensor/tensor.py:133:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/tensor/tensor.py:140:1: DAR101 Missing parameter(s) in Docstring: - *order
-tinytorch/tensor/tensor.py:140:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/tensor/tensor.py:144:1: DAR101 Missing parameter(s) in Docstring: - *shape
-tinytorch/tensor/tensor.py:144:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/tensor/tensor.py:148:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/tensor/tensor.py:176:1: DAR101 Missing parameter(s) in Docstring: - backend
-tinytorch/tensor/tensor.py:176:1: DAR201 Missing "Returns" in Docstring: - return
-tinytorch/tensor/tensor.py:176:1: DAR101 Missing parameter(s) in Docstring: - shape
-tinytorch/tensor/tensor.py:176:1: DAR101 Missing parameter(s) in Docstring: - storage
-tinytorch/tensor/tensor.py:176:1: DAR101 Missing parameter(s) in Docstring: - strides
-tinytorch/tensor/tensor.py:206:80: E501 line too long (80 > 79 characters)
-tinytorch/tensor/tensor.py:212:80: E501 line too long (82 > 79 characters)
+tinytorch/tensor/tensor.py:18:80: E501 line too long (90 > 79 characters)
+tinytorch/tensor/tensor.py:61:1: DAR101 Missing parameter(s) in Docstring: - b
+tinytorch/tensor/tensor.py:61:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/tensor/tensor.py:126:1: DAR101 Missing parameter(s) in Docstring: - dim
+tinytorch/tensor/tensor.py:126:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/tensor/tensor.py:130:1: DAR101 Missing parameter(s) in Docstring: - dim
+tinytorch/tensor/tensor.py:130:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/tensor/tensor.py:137:1: DAR101 Missing parameter(s) in Docstring: - *order
+tinytorch/tensor/tensor.py:137:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/tensor/tensor.py:141:1: DAR101 Missing parameter(s) in Docstring: - *shape
+tinytorch/tensor/tensor.py:141:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/tensor/tensor.py:145:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/tensor/tensor.py:173:1: DAR101 Missing parameter(s) in Docstring: - backend
+tinytorch/tensor/tensor.py:173:1: DAR201 Missing "Returns" in Docstring: - return
+tinytorch/tensor/tensor.py:173:1: DAR101 Missing parameter(s) in Docstring: - shape
+tinytorch/tensor/tensor.py:173:1: DAR101 Missing parameter(s) in Docstring: - storage
+tinytorch/tensor/tensor.py:173:1: DAR101 Missing parameter(s) in Docstring: - strides
+tinytorch/tensor/tensor.py:203:80: E501 line too long (80 > 79 characters)
+tinytorch/tensor/tensor.py:209:80: E501 line too long (82 > 79 characters)
 tinytorch/tensor/ops.py:30:1: DAR102 Excess parameter(s) in Docstring: + out
 tinytorch/tensor/ops.py:31:1: DAR102 Excess parameter(s) in Docstring: + out_shape
 tinytorch/tensor/ops.py:32:1: DAR102 Excess parameter(s) in Docstring: + out_strides
@@ -357,92 +356,96 @@ tinytorch/tensor/ops.py:221:80: E501 line too long (88 > 79 characters)
 tinytorch/tensor/ops.py:249:1: DAR101 Missing parameter(s) in Docstring: - start
 tinytorch/tensor/ops.py:251:1: DAR102 Excess parameter(s) in Docstring: + a
 tinytorch/tensor/ops.py:252:1: DAR102 Excess parameter(s) in Docstring: + dim
-tinytorch/tensor/data.py:20:80: E501 line too long (84 > 79 characters)
-tinytorch/tensor/data.py:123:80: E501 line too long (84 > 79 characters)
-tinytorch/tensor/data.py:124:80: E501 line too long (88 > 79 characters)
-tinytorch/tensor/data.py:127:80: E501 line too long (89 > 79 characters)
-tinytorch/tensor/data.py:128:80: E501 line too long (92 > 79 characters)
-tinytorch/tensor/data.py:156:80: E501 line too long (80 > 79 characters)
-tinytorch/tensor/data.py:171:80: E501 line too long (109 > 79 characters)
-tinytorch/tensor/data.py:198:80: E501 line too long (80 > 79 characters)
-tinytorch/tensor/data.py:200:80: E501 line too long (84 > 79 characters)
-tinytorch/tensor/data.py:232:80: E501 line too long (98 > 79 characters)
-tinytorch/tensor/data.py:236:80: E501 line too long (88 > 79 characters)
-tinytorch/tensor/data.py:245:80: E501 line too long (86 > 79 characters)
-tinytorch/tensor/data.py:251:13: E741 ambiguous variable name 'l'
-tinytorch/tensor/data.py:254:21: E741 ambiguous variable name 'l'
-tinytorch/tensor/data.py:260:13: E741 ambiguous variable name 'l'
-tinytorch/tensor/data.py:263:21: E741 ambiguous variable name 'l'
-tests/strategies.py:45:80: E501 line too long (84 > 79 characters)
-tests/strategies.py:54:80: E501 line too long (86 > 79 characters)
-tests/strategies.py:83:80: E501 line too long (81 > 79 characters)
-tests/strategies.py:113:80: E501 line too long (93 > 79 characters)
-tests/test_module.py:97:1: DAR101 Missing parameter(s) in Docstring: - size_a
-tests/test_module.py:97:1: DAR101 Missing parameter(s) in Docstring: - size_b
-tests/test_module.py:117:1: DAR101 Missing parameter(s) in Docstring: - size_a
-tests/test_module.py:117:1: DAR101 Missing parameter(s) in Docstring: - size_b
-tests/test_module.py:117:1: DAR101 Missing parameter(s) in Docstring: - val
-tests/test_operators.py:16:80: E501 line too long (83 > 79 characters)
-tests/test_operators.py:17:1: DAR101 Missing parameter(s) in Docstring: - x
-tests/test_operators.py:17:1: DAR101 Missing parameter(s) in Docstring: - y
-tests/test_operators.py:52:1: DAR101 Missing parameter(s) in Docstring: - a
-tests/test_operators.py:215:1: DAR101 Missing parameter(s) in Docstring: - ls1
-tests/test_operators.py:215:1: DAR101 Missing parameter(s) in Docstring: - ls2
-tests/test_operators.py:238:6: N802 function name 'test_negList' should be lowercase
-tests/test_operators.py:245:6: N806 variable 'mulLists' in function should be lowercase
-tests/test_nn.py:1:1: F401 'pytest' imported but unused
-tests/test_nn.py:35:80: E501 line too long (87 > 79 characters)
-tests/test_nn.py:49:80: E501 line too long (81 > 79 characters)
-tests/test_nn.py:54:80: E501 line too long (81 > 79 characters)
-tests/test_nn.py:59:80: E501 line too long (81 > 79 characters)
-tests/test_autodiff.py:1:1: F401 'pytest' imported but unused
-tests/test_autodiff.py:13:1: DAR101 Missing parameter(s) in Docstring: - ctx
-tests/test_autodiff.py:13:1: DAR201 Missing "Returns" in Docstring: - return
-tests/test_autodiff.py:13:1: DAR101 Missing parameter(s) in Docstring: - x
-tests/test_autodiff.py:13:1: DAR101 Missing parameter(s) in Docstring: - y
-tests/test_autodiff.py:18:1: DAR101 Missing parameter(s) in Docstring: - ctx
-tests/test_autodiff.py:18:1: DAR101 Missing parameter(s) in Docstring: - d_output
-tests/test_autodiff.py:18:1: DAR201 Missing "Returns" in Docstring: - return
-tests/test_autodiff.py:25:1: DAR101 Missing parameter(s) in Docstring: - ctx
-tests/test_autodiff.py:25:1: DAR201 Missing "Returns" in Docstring: - return
-tests/test_autodiff.py:25:1: DAR101 Missing parameter(s) in Docstring: - x
-tests/test_autodiff.py:25:1: DAR101 Missing parameter(s) in Docstring: - y
-tests/test_autodiff.py:31:1: DAR101 Missing parameter(s) in Docstring: - ctx
-tests/test_autodiff.py:31:1: DAR101 Missing parameter(s) in Docstring: - d_output
-tests/test_autodiff.py:31:1: DAR201 Missing "Returns" in Docstring: - return
-tests/test_autodiff.py:41:80: E501 line too long (82 > 79 characters)
-tests/test_scalar.py:40:80: E501 line too long (83 > 79 characters)
-tests/test_conv.py:69:80: E501 line too long (88 > 79 characters)
+tinytorch/tensor/data.py:18:80: E501 line too long (84 > 79 characters)
+tinytorch/tensor/data.py:97:80: E501 line too long (83 > 79 characters)
+tinytorch/tensor/data.py:119:80: E501 line too long (84 > 79 characters)
+tinytorch/tensor/data.py:120:80: E501 line too long (88 > 79 characters)
+tinytorch/tensor/data.py:123:80: E501 line too long (89 > 79 characters)
+tinytorch/tensor/data.py:124:80: E501 line too long (92 > 79 characters)
+tinytorch/tensor/data.py:152:80: E501 line too long (80 > 79 characters)
+tinytorch/tensor/data.py:167:80: E501 line too long (109 > 79 characters)
+tinytorch/tensor/data.py:194:80: E501 line too long (80 > 79 characters)
+tinytorch/tensor/data.py:196:80: E501 line too long (84 > 79 characters)
+tinytorch/tensor/data.py:228:80: E501 line too long (98 > 79 characters)
+tinytorch/tensor/data.py:232:80: E501 line too long (88 > 79 characters)
+tinytorch/tensor/data.py:241:80: E501 line too long (86 > 79 characters)
+tinytorch/tensor/data.py:247:13: E741 ambiguous variable name 'l'
+tinytorch/tensor/data.py:250:21: E741 ambiguous variable name 'l'
+tinytorch/tensor/data.py:256:13: E741 ambiguous variable name 'l'
+tinytorch/tensor/data.py:259:21: E741 ambiguous variable name 'l'
+tests/strategies.py:2:80: E501 line too long (82 > 79 characters)
+tests/strategies.py:48:80: E501 line too long (84 > 79 characters)
+tests/strategies.py:57:80: E501 line too long (86 > 79 characters)
+tests/strategies.py:84:80: E501 line too long (86 > 79 characters)
+tests/strategies.py:112:80: E501 line too long (93 > 79 characters)
+tests/test_module.py:88:1: DAR101 Missing parameter(s) in Docstring: - size_a
+tests/test_module.py:88:1: DAR101 Missing parameter(s) in Docstring: - size_b
+tests/test_module.py:108:1: DAR101 Missing parameter(s) in Docstring: - size_a
+tests/test_module.py:108:1: DAR101 Missing parameter(s) in Docstring: - size_b
+tests/test_module.py:108:1: DAR101 Missing parameter(s) in Docstring: - val
+tests/test_operators.py:35:80: E501 line too long (83 > 79 characters)
+tests/test_operators.py:36:1: DAR101 Missing parameter(s) in Docstring: - x
+tests/test_operators.py:36:1: DAR101 Missing parameter(s) in Docstring: - y
+tests/test_operators.py:71:1: DAR101 Missing parameter(s) in Docstring: - a
+tests/test_operators.py:234:1: DAR101 Missing parameter(s) in Docstring: - ls1
+tests/test_operators.py:234:1: DAR101 Missing parameter(s) in Docstring: - ls2
+tests/test_operators.py:257:6: N802 function name 'test_negList' should be lowercase
+tests/test_operators.py:264:6: N806 variable 'mulLists' in function should be lowercase
+tests/test_nn.py:36:80: E501 line too long (81 > 79 characters)
+tests/test_nn.py:41:80: E501 line too long (81 > 79 characters)
+tests/test_nn.py:46:80: E501 line too long (81 > 79 characters)
+tests/test_autodiff.py:11:1: DAR101 Missing parameter(s) in Docstring: - ctx
+tests/test_autodiff.py:11:1: DAR201 Missing "Returns" in Docstring: - return
+tests/test_autodiff.py:11:1: DAR101 Missing parameter(s) in Docstring: - x
+tests/test_autodiff.py:11:1: DAR101 Missing parameter(s) in Docstring: - y
+tests/test_autodiff.py:16:1: DAR101 Missing parameter(s) in Docstring: - ctx
+tests/test_autodiff.py:16:1: DAR101 Missing parameter(s) in Docstring: - d_output
+tests/test_autodiff.py:16:1: DAR201 Missing "Returns" in Docstring: - return
+tests/test_autodiff.py:23:1: DAR101 Missing parameter(s) in Docstring: - ctx
+tests/test_autodiff.py:23:1: DAR201 Missing "Returns" in Docstring: - return
+tests/test_autodiff.py:23:1: DAR101 Missing parameter(s) in Docstring: - x
+tests/test_autodiff.py:23:1: DAR101 Missing parameter(s) in Docstring: - y
+tests/test_autodiff.py:29:1: DAR101 Missing parameter(s) in Docstring: - ctx
+tests/test_autodiff.py:29:1: DAR101 Missing parameter(s) in Docstring: - d_output
+tests/test_autodiff.py:29:1: DAR201 Missing "Returns" in Docstring: - return
+tests/test_autodiff.py:39:80: E501 line too long (82 > 79 characters)
+tests/tensor/test_tensor.py:5:80: E501 line too long (80 > 79 characters)
 tests/tensor/test_tensor.py:136:1: E266 too many leading '#' for block comment
-tests/tensor/test_tensor_data.py:42:1: DAR101 Missing parameter(s) in Docstring: - tensor_data
-tests/tensor/test_tensor_data.py:60:1: DAR101 Missing parameter(s) in Docstring: - tensor_data
-tests/tensor/test_tensor_data.py:156:80: E501 line too long (88 > 79 characters)
-tests/tensor/test_tensor_general.py:33:80: E501 line too long (83 > 79 characters)
-tests/tensor/test_tensor_general.py:41:1: DAR101 Missing parameter(s) in Docstring: - backend
-tests/tensor/test_tensor_general.py:41:1: DAR101 Missing parameter(s) in Docstring: - t1
-tests/tensor/test_tensor_general.py:54:1: DAR101 Missing parameter(s) in Docstring: - backend
-tests/tensor/test_tensor_general.py:54:1: DAR101 Missing parameter(s) in Docstring: - data
-tests/tensor/test_tensor_general.py:54:1: DAR101 Missing parameter(s) in Docstring: - fn
-tests/tensor/test_tensor_general.py:67:1: DAR101 Missing parameter(s) in Docstring: - backend
-tests/tensor/test_tensor_general.py:67:1: DAR101 Missing parameter(s) in Docstring: - data
-tests/tensor/test_tensor_general.py:67:1: DAR101 Missing parameter(s) in Docstring: - fn
-tests/tensor/test_tensor_general.py:78:1: DAR101 Missing parameter(s) in Docstring: - backend
-tests/tensor/test_tensor_general.py:78:1: DAR101 Missing parameter(s) in Docstring: - data
-tests/tensor/test_tensor_general.py:78:1: DAR101 Missing parameter(s) in Docstring: - fn
-tests/tensor/test_tensor_general.py:90:1: DAR101 Missing parameter(s) in Docstring: - backend
-tests/tensor/test_tensor_general.py:90:1: DAR101 Missing parameter(s) in Docstring: - data
-tests/tensor/test_tensor_general.py:90:1: DAR101 Missing parameter(s) in Docstring: - fn
-tests/tensor/test_tensor_general.py:101:1: DAR101 Missing parameter(s) in Docstring: - backend
-tests/tensor/test_tensor_general.py:101:1: DAR101 Missing parameter(s) in Docstring: - data
-tests/tensor/test_tensor_general.py:101:1: DAR101 Missing parameter(s) in Docstring: - fn
-tests/tensor/test_tensor_general.py:291:1: DAR101 Missing parameter(s) in Docstring: - backend
-tests/tensor/test_tensor_general.py:291:1: DAR101 Missing parameter(s) in Docstring: - data
-tests/tensor/test_tensor_general.py:291:1: DAR101 Missing parameter(s) in Docstring: - fn
-tests/tensor/test_tensor_general.py:305:1: DAR101 Missing parameter(s) in Docstring: - backend
-tests/tensor/test_tensor_general.py:305:1: DAR101 Missing parameter(s) in Docstring: - data
-tests/tensor/test_tensor_general.py:332:6: N806 variable 'A' in function should be lowercase
-tests/tensor/test_tensor_general.py:332:6: N806 variable 'B' in function should be lowercase
-tests/tensor/test_tensor_general.py:332:6: N806 variable 'C' in function should be lowercase
-tests/tensor/test_tensor_general.py:332:6: N806 variable 'D' in function should be lowercase
+tests/tensor/test_tensor_data.py:46:1: DAR101 Missing parameter(s) in Docstring: - tensor_data
+tests/tensor/test_tensor_data.py:64:1: DAR101 Missing parameter(s) in Docstring: - tensor_data
+tests/tensor/test_tensor_data.py:160:80: E501 line too long (88 > 79 characters)
+tests/tensor/test_tensor_general.py:18:80: E501 line too long (84 > 79 characters)
+tests/tensor/test_tensor_general.py:48:1: DAR101 Missing parameter(s) in Docstring: - backend
+tests/tensor/test_tensor_general.py:48:1: DAR101 Missing parameter(s) in Docstring: - t1
+tests/tensor/test_tensor_general.py:61:1: DAR101 Missing parameter(s) in Docstring: - backend
+tests/tensor/test_tensor_general.py:61:1: DAR101 Missing parameter(s) in Docstring: - data
+tests/tensor/test_tensor_general.py:61:1: DAR101 Missing parameter(s) in Docstring: - fn
+tests/tensor/test_tensor_general.py:74:1: DAR101 Missing parameter(s) in Docstring: - backend
+tests/tensor/test_tensor_general.py:74:1: DAR101 Missing parameter(s) in Docstring: - data
+tests/tensor/test_tensor_general.py:74:1: DAR101 Missing parameter(s) in Docstring: - fn
+tests/tensor/test_tensor_general.py:85:1: DAR101 Missing parameter(s) in Docstring: - backend
+tests/tensor/test_tensor_general.py:85:1: DAR101 Missing parameter(s) in Docstring: - data
+tests/tensor/test_tensor_general.py:85:1: DAR101 Missing parameter(s) in Docstring: - fn
+tests/tensor/test_tensor_general.py:97:1: DAR101 Missing parameter(s) in Docstring: - backend
+tests/tensor/test_tensor_general.py:97:1: DAR101 Missing parameter(s) in Docstring: - data
+tests/tensor/test_tensor_general.py:97:1: DAR101 Missing parameter(s) in Docstring: - fn
+tests/tensor/test_tensor_general.py:108:1: DAR101 Missing parameter(s) in Docstring: - backend
+tests/tensor/test_tensor_general.py:108:1: DAR101 Missing parameter(s) in Docstring: - data
+tests/tensor/test_tensor_general.py:108:1: DAR101 Missing parameter(s) in Docstring: - fn
+tests/tensor/test_tensor_general.py:179:80: E501 line too long (81 > 79 characters)
+tests/tensor/test_tensor_general.py:191:80: E501 line too long (81 > 79 characters)
+tests/tensor/test_tensor_general.py:204:80: E501 line too long (81 > 79 characters)
+tests/tensor/test_tensor_general.py:219:80: E501 line too long (81 > 79 characters)
+tests/tensor/test_tensor_general.py:240:80: E501 line too long (81 > 79 characters)
+tests/tensor/test_tensor_general.py:264:80: E501 line too long (81 > 79 characters)
+tests/tensor/test_tensor_general.py:286:1: DAR101 Missing parameter(s) in Docstring: - backend
+tests/tensor/test_tensor_general.py:286:1: DAR101 Missing parameter(s) in Docstring: - data
+tests/tensor/test_tensor_general.py:286:1: DAR101 Missing parameter(s) in Docstring: - fn
+tests/tensor/test_tensor_general.py:300:1: DAR101 Missing parameter(s) in Docstring: - backend
+tests/tensor/test_tensor_general.py:300:1: DAR101 Missing parameter(s) in Docstring: - data
+tests/tensor/test_tensor_general.py:327:6: N806 variable 'A' in function should be lowercase
+tests/tensor/test_tensor_general.py:327:6: N806 variable 'B' in function should be lowercase
+tests/tensor/test_tensor_general.py:327:6: N806 variable 'C' in function should be lowercase
+tests/tensor/test_tensor_general.py:327:6: N806 variable 'D' in function should be lowercase
 make: *** [test_style] Error 1
- !  ◰³ base  ~/G/a/tinytorch   *+…                                                                  (base) 4.3m  Tue Mar  1 09:51:22 2022
+ !  ◰³ base  ~/G/a/tinytorch   *+                                                                   (base) 3.9m  Tue Mar  1 10:39:47 2022

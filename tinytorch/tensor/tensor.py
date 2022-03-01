@@ -86,7 +86,6 @@ class Tensor(Variable):
         )
 
     def __matmul__(self, b):
-        "Not used until Module 3"
         return self.backend.MatMul.apply(self, b)
 
     def __lt__(self, b):

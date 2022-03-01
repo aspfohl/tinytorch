@@ -1,8 +1,5 @@
 variable_count = 1
 
-
-# ## Module 1
-
 # Variable is the main class for autodifferentiation logic for scalars
 # and tensors.
 

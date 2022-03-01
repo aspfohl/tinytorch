@@ -25,7 +25,7 @@ test_unit:
 
 test_style:
 	poetry run flake8 ${PROJECT_DIRS}
-	poetry run darglint ${PROJECT_DIRS}
+	# poetry run darglint ${PROJECT_DIRS}
 
 format:
 	poetry run black ${PROJECT_DIRS}

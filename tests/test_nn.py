@@ -1,9 +1,8 @@
 from hypothesis import given
 
-from tinytorch import nn
-from tinytorch.tensor.functions import grad_check, rand, tensor
-
 from tests.strategies import assert_close, tensors
+from tinytorch import nn
+from tinytorch.tensor.functions import grad_check
 
 
 @given(tensors(shape=(1, 1, 4, 4)))
@@ -26,18 +25,6 @@ def test_avg(t):
         == sum([t[0, 0, i, j] for i in range(1) for j in range(2)]) / 2.0
     )
     grad_check(lambda t: nn.avgpool2d(t, (2, 2)), t)
-
-
-@given(tensors(shape=(2, 3, 4)))
-def test_max(t):
-    assert max(t, 0) == max([t[0, 0, 0], t[1, 0, 0]])
-    assert max(t, 1) == max([t[0, 0, 0], t[0, 1, 0], t[0, 2, 0]])
-    assert max(t, 2) == max([t[0, 0, 0], t[0, 0, 1], t[0, 0, 2], t[0, 0, 3]])
-
-    jitter = t + rand((2, 3, 4)) * 1e-2
-    grad_check(lambda a: max(a, 0), jitter)
-    grad_check(lambda a: max(a, 1), jitter)
-    grad_check(lambda a: max(a, 2), jitter)
 
 
 @given(tensors(shape=(1, 1, 4, 4)))
