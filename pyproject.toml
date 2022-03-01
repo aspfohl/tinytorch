@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "tinytorch"
-version = "0.4.1"
+version = "0.0.1"
 description = ""
-authors = ["annasmith370 <annalsmith14@gmail.com>"]
+authors = ["aspfohl <annaspfohl@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.10"
@@ -34,6 +34,25 @@ pep8-naming = "0.11.1"
 darglint = "^1.8.0"
 pytest-cov = "^2.12.1"
 isort = "^5.10.1"
+
+[tool.black]
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.tox
+  | venv
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+# make it compatible with black
+profile = "black"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
