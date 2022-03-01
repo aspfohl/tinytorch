@@ -1,7 +1,9 @@
-import tinytorch
-from datasets import load_dataset
-import embeddings
 import random
+
+import embeddings
+from datasets import load_dataset
+
+import tinytorch
 
 BACKEND = tinytorch.make_tensor_backend(tinytorch.FastOps)
 

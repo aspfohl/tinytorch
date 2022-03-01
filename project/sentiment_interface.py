@@ -1,10 +1,12 @@
-from datasets import load_dataset
-import streamlit as st
-import pandas as pd
-import embeddings
-import plotly.graph_objects as go
-from run_sentiment import SentenceSentimentTrain
 import time
+
+import embeddings
+import pandas as pd
+import plotly.graph_objects as go
+import streamlit as st
+from datasets import load_dataset
+from run_sentiment import SentenceSentimentTrain
+
 from project.run_sentiment import CNNSentimentKim, encode_sentiment_data
 
 EMBEDDING_SIZE = 50

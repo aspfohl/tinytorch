@@ -1,7 +1,9 @@
-import tinytorch
-import pytest
 import numba
+import pytest
 from hypothesis import given, settings
+
+import tinytorch
+
 from .strategies import tensors
 
 BACKEND = {"fast1": tinytorch.Conv1dFun, "fast2": tinytorch.Conv2dFun}

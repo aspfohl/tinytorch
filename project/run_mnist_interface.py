@@ -1,10 +1,10 @@
-from run_mnist_multiclass import make_mnist
-import plotly.graph_objects as go
-import pandas as pd
 import time
-import streamlit as st
-from run_mnist_multiclass import ImageTrain
+
+import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
+import streamlit as st
+from run_mnist_multiclass import ImageTrain, make_mnist
 
 
 def render_run_image_interface():

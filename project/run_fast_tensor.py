@@ -1,8 +1,10 @@
-import tinytorch
-import datasets
-import numba
 import random
 import time
+
+import datasets
+import numba
+
+import tinytorch
 
 FastTensorBackend = tinytorch.make_tensor_backend(tinytorch.FastOps)
 

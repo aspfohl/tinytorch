@@ -1,13 +1,8 @@
 import numpy as np
-from .tensor_data import (
-    to_index,
-    index_to_position,
-    broadcast_index,
-    shape_broadcast,
-    MAX_DIMS,
-)
 from numba import njit, prange
 
+from .tensor_data import (MAX_DIMS, broadcast_index, index_to_position,
+                          shape_broadcast, to_index)
 
 # TIP: Use `NUMBA_DISABLE_JIT=1 pytest tests` to run these tests without JIT.
 

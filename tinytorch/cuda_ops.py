@@ -1,13 +1,8 @@
-from numba import cuda
 import numba
-from .tensor_data import (
-    to_index,
-    index_to_position,
-    TensorData,
-    broadcast_index,
-    shape_broadcast,
-    MAX_DIMS,
-)
+from numba import cuda
+
+from .tensor_data import (MAX_DIMS, TensorData, broadcast_index,
+                          index_to_position, shape_broadcast, to_index)
 
 # This code will CUDA compile fast versions your tensor_data functions.
 # If you get an error, read the docs for NUMBA as to what is allowed

@@ -1,30 +1,12 @@
 import pytest
 from hypothesis import given
 from hypothesis.strategies import lists
+
 from tinytorch import MathTest
-from tinytorch.operators import (
-    add,
-    addLists,
-    eq,
-    exp,
-    id,
-    inv,
-    inv_back,
-    is_close,
-    log,
-    log_back,
-    lt,
-    max,
-    mul,
-    neg,
-    negList,
-    prod,
-    relu,
-    relu_back,
-    sigmoid,
-    sum,
-    zipWith,
-)
+from tinytorch.operators import (add, addLists, eq, exp, id, inv, inv_back,
+                                 is_close, log, log_back, lt, max, mul, neg,
+                                 negList, prod, relu, relu_back, sigmoid, sum,
+                                 zipWith)
 
 from .strategies import assert_close, small_floats
 

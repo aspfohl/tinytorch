@@ -1,6 +1,8 @@
-import tinytorch
 import pytest
 from hypothesis import given
+
+import tinytorch
+
 from .strategies import med_ints, small_floats
 
 # # Tests for module.py

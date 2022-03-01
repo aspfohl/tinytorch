@@ -1,6 +1,8 @@
-import tinytorch
 from hypothesis import settings
-from hypothesis.strategies import composite, floats, integers, lists, permutations
+from hypothesis.strategies import (composite, floats, integers, lists,
+                                   permutations)
+
+import tinytorch
 
 settings.register_profile("ci", deadline=None)
 settings.load_profile("ci")

@@ -29,7 +29,7 @@ test_style:
 
 format:
 	poetry run black ${PROJECT_DIRS}
-	# poetry run isort ${PROJECT_DIRS}
+	poetry run isort ${PROJECT_DIRS}
 
 run:
 	poetry run streamlit run project/app.py -- 4

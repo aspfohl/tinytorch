@@ -1,9 +1,11 @@
-import tinytorch
+import pytest
 from hypothesis import given
 from hypothesis.strategies import data
-from .strategies import tensor_data, indices
-import pytest
 from numpy import array, array_equal
+
+import tinytorch
+
+from .strategies import indices, tensor_data
 
 # Check basic properties of layout and strides.
 

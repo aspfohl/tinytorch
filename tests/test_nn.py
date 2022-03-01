@@ -1,7 +1,9 @@
-import tinytorch
-from hypothesis import given
-from .strategies import tensors, assert_close
 import pytest
+from hypothesis import given
+
+import tinytorch
+
+from .strategies import assert_close, tensors
 
 
 @given(tensors(shape=(1, 1, 4, 4)))

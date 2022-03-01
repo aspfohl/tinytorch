@@ -1,6 +1,6 @@
-from .fast_ops import FastOps
-from .tensor_functions import rand, Function
 from . import operators
+from .fast_ops import FastOps
+from .tensor_functions import Function, rand
 
 
 def tile(input, kernel):

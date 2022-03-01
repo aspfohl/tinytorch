@@ -2,10 +2,9 @@
 Implementation of the core Tensor object for autodifferentiation.
 """
 
+from . import operators
 from .autodiff import Variable
 from .tensor_data import TensorData
-from . import operators
-
 
 # This class is very similar to Scalar so we implemented it for you.
 

@@ -1,18 +1,15 @@
-import tinytorch
 import random
-from tinytorch import grad_check
+
+import numba
 import pytest
 from hypothesis import given, settings
-import numba
-from hypothesis.strategies import integers, lists, data, permutations
-from .strategies import (
-    tensors,
-    shaped_tensors,
-    assert_close,
-    assert_close_tensor,
-    small_floats,
-)
-from tinytorch import MathTestVariable
+from hypothesis.strategies import data, integers, lists, permutations
+
+import tinytorch
+from tinytorch import MathTestVariable, grad_check
+
+from .strategies import (assert_close, assert_close_tensor, shaped_tensors,
+                         small_floats, tensors)
 
 one_arg, two_arg, red_arg = MathTestVariable._tests()
 

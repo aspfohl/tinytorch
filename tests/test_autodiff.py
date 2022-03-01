@@ -1,7 +1,7 @@
-import tinytorch
 import pytest
-from tinytorch import History
 
+import tinytorch
+from tinytorch import History
 
 # Simple sanity check and debugging tests.
 

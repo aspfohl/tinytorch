@@ -1,7 +1,7 @@
-from .autodiff import FunctionBase, Variable, History
-from . import operators
 import numpy as np
 
+from . import operators
+from .autodiff import FunctionBase, History, Variable
 
 # Central Difference calculation
 

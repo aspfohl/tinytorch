@@ -1,6 +1,6 @@
 from mnist import MNIST
-import tinytorch
 
+import tinytorch
 
 mndata = MNIST(".data/")
 images, labels = mndata.load_training()

@@ -1,8 +1,11 @@
 import random
-import tinytorch
-from .operators import prod
-from numpy import array, float64, ndarray
+
 import numba
+from numpy import array, float64, ndarray
+
+import tinytorch
+
+from .operators import prod
 
 MAX_DIMS = 32
 

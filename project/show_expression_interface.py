@@ -1,6 +1,6 @@
-import streamlit as st
 import graph_builder
 import networkx as nx
+import streamlit as st
 
 
 def render_show_expression(tensor=False):

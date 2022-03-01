@@ -3,12 +3,14 @@ Implementation of the autodifferentiation Functions for Tensor.
 """
 
 
-from .autodiff import FunctionBase
-from .tensor_ops import TensorOps
-import numpy as np
-from . import operators
-from .tensor import Tensor
 import random
+
+import numpy as np
+
+from . import operators
+from .autodiff import FunctionBase
+from .tensor import Tensor
+from .tensor_ops import TensorOps
 
 
 # Constructors

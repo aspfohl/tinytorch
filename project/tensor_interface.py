@@ -1,10 +1,12 @@
-from tinytorch.tensor_data import TensorData
-from project.interface.streamlit_utils import render_function
-import streamlit as st
-from tinytorch import index_to_position, operators, to_index, Tensor, TensorFunctions
-from show_tensor import tensor_figure
 import numpy as np
 import plotly.graph_objects as go
+import streamlit as st
+from show_tensor import tensor_figure
+
+from project.interface.streamlit_utils import render_function
+from tinytorch import (Tensor, TensorFunctions, index_to_position, operators,
+                       to_index)
+from tinytorch.tensor_data import TensorData
 
 
 def st_select_index(tensor_shape, n_cols=3):

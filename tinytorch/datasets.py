@@ -1,6 +1,6 @@
-from dataclasses import dataclass
-import random
 import math
+import random
+from dataclasses import dataclass
 
 
 def make_pts(N):

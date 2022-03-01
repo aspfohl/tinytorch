@@ -1,5 +1,6 @@
-import streamlit as st
 import networkx as nx
+import streamlit as st
+
 import tinytorch
 
 MyModule = None

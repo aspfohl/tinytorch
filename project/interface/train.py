@@ -1,11 +1,13 @@
-import plotly.graph_objects as go
-import pandas as pd
 import time
-import streamlit as st
+
 import graph_builder
-import networkx as nx
-import tinytorch
 import interface.plots as plots
+import networkx as nx
+import pandas as pd
+import plotly.graph_objects as go
+import streamlit as st
+
+import tinytorch
 
 
 def render_train_interface(

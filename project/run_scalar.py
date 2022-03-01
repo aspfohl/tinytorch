@@ -2,9 +2,11 @@
 Be sure you have tinytorch installed in you Virtual Env.
 >>> pip install -Ue .
 """
-import tinytorch
 import random
+
 import pytest
+
+import tinytorch
 
 
 class Network(tinytorch.Module):

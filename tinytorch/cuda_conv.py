@@ -1,13 +1,8 @@
 import numpy as np
-from .tensor_data import (
-    to_index,
-    index_to_position,
-    broadcast_index,
-    MAX_DIMS,
-)
-from .tensor_functions import Function
 from numba import njit, prange
 
+from .tensor_data import MAX_DIMS, broadcast_index, index_to_position, to_index
+from .tensor_functions import Function
 
 # This code will JIT compile fast versions your tensor_data functions.
 # If you get an error, read the docs for NUMBA as to what is allowed
