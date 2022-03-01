@@ -81,7 +81,7 @@ class Network(tinytorch.Module):
         self.out = self.conv2.forward(self.mid).relu()
 
         # Apply 2D pooling (either Avg or Max) with 4x4 kernel
-        pooled = tinytorch.avgpool2d(self.out, (4, 4))
+        pooled = tinytorch.nn.avgpool2d(self.out, (4, 4))
 
         # Flatten channels, height, and width. (Should be size BATCHx392)
         flattened = pooled.view(BATCH, 392)
@@ -89,13 +89,13 @@ class Network(tinytorch.Module):
         # Apply a Linear to size 64 followed by a ReLU and Dropout with rate 25
         lineared = self.linear1.forward(flattened).relu()
         if self.training:
-            lineared = tinytorch.dropout(lineared, 0.25)
+            lineared = tinytorch.nn.dropout(lineared, 0.25)
 
         # Apply a Linear to size C (number of classes)
         lineared2 = self.linear2.forward(lineared)
 
         # Apply a logsoftmax over the class dimension
-        return tinytorch.logsoftmax(lineared2, 1)
+        return tinytorch.nn.logsoftmax(lineared2, 1)
 
 
 def make_mnist(start, stop):
@@ -129,7 +129,7 @@ class ImageTrain:
         self.model = Network()
         model = self.model
         n_training_samples = len(X_train)
-        optim = tinytorch.SGD(self.model.parameters(), learning_rate)
+        optim = tinytorch.optim.SGD(self.model.parameters(), learning_rate)
         losses = []
         for epoch in range(1, max_epochs + 1):
             total_loss = 0.0

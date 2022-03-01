@@ -1,8 +1,8 @@
 import numpy as np
 from numba import njit, prange
 
-from ..tensor.data import MAX_DIMS, broadcast_index, index_to_position, to_index
-from ..tensor.functions import Function
+from tinytorch.tensor.data import MAX_DIMS, broadcast_index, index_to_position, to_index
+from tinytorch.tensor.functions import Function
 
 # This code will JIT compile fast versions your tensor_data functions.
 # If you get an error, read the docs for NUMBA as to what is allowed

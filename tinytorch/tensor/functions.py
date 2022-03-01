@@ -7,10 +7,10 @@ import random
 
 import numpy as np
 
-from .. import operators
-from ..autodiff import FunctionBase
-from .ops import TensorOps
-from .tensor import Tensor
+from tinytorch import operators
+from tinytorch.autodiff import FunctionBase
+from tinytorch.tensor.ops import TensorOps
+from tinytorch.tensor.tensor import Tensor
 
 
 # Constructors

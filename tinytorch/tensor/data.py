@@ -3,9 +3,7 @@ import random
 import numba
 from numpy import array, float64, ndarray
 
-import tinytorch
-
-from ..operators import prod
+from tinytorch.operators import prod
 
 MAX_DIMS = 32
 
@@ -96,9 +94,7 @@ def shape_broadcast(shape1: tuple, shape2: tuple) -> tuple:
     """
     for shape in (shape1, shape2):
         if not shape:
-            raise tinytorch.IndexingError(
-                f"Shape must have at least one dimension: {shape}"
-            )
+            raise IndexingError(f"Shape must have at least one dimension: {shape}")
 
     len_shape1 = len(shape1)
     len_shape2 = len(shape2)
@@ -123,7 +119,7 @@ def shape_broadcast(shape1: tuple, shape2: tuple) -> tuple:
                 shape1_reversed[idx] != new_shape[idx] and shape1_reversed[idx] != 1
             ) or (shape2_reversed[idx] != new_shape[idx] and shape2_reversed[idx] != 1):
 
-                raise tinytorch.IndexingError(
+                raise IndexingError(
                     f"The size of tensor a ({shape1_reversed[idx]}) must match the size "
                     f"of tensor b ({shape2_reversed[idx]}) at non-singleton dimension {idx}"
                 )

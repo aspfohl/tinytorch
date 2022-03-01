@@ -1,8 +1,11 @@
 from hypothesis import settings
-from hypothesis.strategies import (composite, floats, integers, lists,
-                                   permutations)
+from hypothesis.strategies import composite, floats, integers, lists, permutations
 
-import tinytorch
+from tinytorch import operators
+from tinytorch.scalar import Scalar
+from tinytorch.tensor import functions
+from tinytorch.tensor.data import TensorData
+from tinytorch.tensor.functions import Tensor, tensor
 
 settings.register_profile("ci", deadline=None)
 settings.load_profile("ci")
@@ -16,13 +19,13 @@ med_ints = integers(min_value=1, max_value=20)
 @composite
 def vals(draw, size, number):
     pts = draw(lists(number, min_size=size, max_size=size,))
-    return tinytorch.tensor(pts)
+    return tensor(pts)
 
 
 @composite
 def scalars(draw, min_value=-100000, max_value=100000):
     val = draw(floats(min_value=min_value, max_value=max_value))
-    return tinytorch.Scalar(val)
+    return Scalar(val)
 
 
 small_scalars = scalars(min_value=-100, max_value=100)
@@ -38,12 +41,12 @@ def shapes(draw):
 def tensor_data(draw, numbers=floats(), shape=None):
     if shape is None:
         shape = draw(shapes())
-    size = int(tinytorch.prod(shape))
+    size = int(operators.prod(shape))
     data = draw(lists(numbers, min_size=size, max_size=size))
     permute = draw(permutations(range(len(shape))))
     permute_shape = tuple([shape[i] for i in permute])
     reverse_permute = [a[0] for a in sorted(enumerate(permute), key=lambda a: a[1])]
-    td = tinytorch.TensorData(data, permute_shape)
+    td = TensorData(data, permute_shape)
     ret = td.permute(*reverse_permute)
     assert ret.shape[0] == shape[0]
     return ret
@@ -61,9 +64,9 @@ def tensors(
     backend=None,
     shape=None,
 ):
-    backend = tinytorch.TensorFunctions if backend is None else backend
+    backend = functions.TensorFunctions if backend is None else backend
     td = draw(tensor_data(numbers, shape=shape))
-    return tinytorch.Tensor(td, backend=backend)
+    return Tensor(td, backend=backend)
 
 
 @composite
@@ -73,16 +76,12 @@ def shaped_tensors(
     numbers=floats(allow_nan=False, min_value=-100, max_value=100),
     backend=None,
 ):
-    backend = tinytorch.TensorFunctions if backend is None else backend
+    backend = functions.TensorFunctions if backend is None else backend
     td = draw(tensor_data(numbers))
     values = []
     for i in range(n):
         data = draw(lists(numbers, min_size=td.size, max_size=td.size))
-        values.append(
-            tinytorch.Tensor(
-                tinytorch.TensorData(data, td.shape, td.strides), backend=backend
-            )
-        )
+        values.append(Tensor(TensorData(data, td.shape, td.strides), backend=backend))
     return values
 
 
@@ -97,14 +96,14 @@ def matmul_tensors(
     l2 = (j, k)
     values = []
     for shape in [l1, l2]:
-        size = int(tinytorch.prod(shape))
+        size = int(operators.prod(shape))
         data = draw(lists(numbers, min_size=size, max_size=size))
-        values.append(tinytorch.Tensor(tinytorch.TensorData(data, shape)))
+        values.append(Tensor(TensorData(data, shape)))
     return values
 
 
 def assert_close(a, b):
-    assert tinytorch.operators.is_close(a, b), "Failure x=%f y=%f" % (a, b)
+    assert operators.is_close(a, b), "Failure x=%f y=%f" % (a, b)
 
 
 def assert_close_tensor(a, b):

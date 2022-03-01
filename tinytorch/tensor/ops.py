@@ -1,6 +1,6 @@
 import numpy as np
 
-from .data import (
+from tinytorch.tensor.data import (
     MAX_DIMS,
     broadcast_index,
     index_to_position,

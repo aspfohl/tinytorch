@@ -1,7 +1,7 @@
 import numpy as np
 
-from . import operators
-from .autodiff import FunctionBase, History, Variable
+from tinytorch import operators
+from tinytorch.autodiff import FunctionBase, History, Variable
 
 # Central Difference calculation
 

@@ -1,5 +1,5 @@
 PROJECT_NAME=tinytorch
-PROJECT_DIRS=tinytorch tests project
+PROJECT_DIRS=tinytorch tests
 
 venv: clean
 	python3 -m venv .venv
@@ -30,6 +30,3 @@ test_style:
 format:
 	poetry run black ${PROJECT_DIRS}
 	poetry run isort ${PROJECT_DIRS}
-
-run:
-	poetry run streamlit run project/app.py -- 4

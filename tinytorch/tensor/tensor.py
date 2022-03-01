@@ -2,11 +2,9 @@
 Implementation of the core Tensor object for autodifferentiation.
 """
 
-from .. import operators
-from ..autodiff import Variable
-from .data import TensorData
-
-# This class is very similar to Scalar so we implemented it for you.
+from tinytorch import operators
+from tinytorch.autodiff import Variable
+from tinytorch.tensor.data import TensorData
 
 
 class Tensor(Variable):
@@ -208,9 +206,8 @@ class Tensor(Variable):
             if orig_shape[dim] == 1 and shape != 1:
                 out = self.backend._add_reduce(out, dim)
         assert out.size == self.size, f"{out.shape} {self.shape}"
-        # START CODE CHANGE (2021)
+
         return Tensor.make(out._tensor._storage, self.shape, backend=self.backend)
-        # END CODE CHANGE (2021)
 
     def zeros(self, shape=None):
         def zero(shape):

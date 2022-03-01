@@ -2,9 +2,9 @@ import pytest
 from hypothesis import given
 from hypothesis.strategies import data, lists, permutations
 
-from tinytorch import MathTestVariable, grad_check, tensor
-
-from .strategies import assert_close, shaped_tensors, small_floats, tensors
+from tests.strategies import assert_close, shaped_tensors, small_floats, tensors
+from tinytorch.tensor.functions import grad_check, tensor
+from tinytorch.testing import MathTestVariable
 
 one_arg, two_arg, red_arg = MathTestVariable._tests()
 

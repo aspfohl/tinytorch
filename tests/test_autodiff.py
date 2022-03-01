@@ -1,12 +1,10 @@
-import pytest
-
-import tinytorch
-from tinytorch import History
+from tinytorch import autodiff
+from tinytorch.scalar import Scalar, ScalarFunction
 
 # Simple sanity check and debugging tests.
 
 
-class Function1(tinytorch.ScalarFunction):
+class Function1(ScalarFunction):
     @staticmethod
     def forward(ctx, x, y):
         ":math:`f(x, y) = x + y + 10`"
@@ -18,7 +16,7 @@ class Function1(tinytorch.ScalarFunction):
         return d_output, d_output
 
 
-class Function2(tinytorch.ScalarFunction):
+class Function2(ScalarFunction):
     @staticmethod
     def forward(ctx, x, y):
         ":math:`f(x, y) = x \timex y + x`"
@@ -37,15 +35,15 @@ class Function2(tinytorch.ScalarFunction):
 
 def test_chain_rule1():
     "Check that constants are ignored."
-    constant = tinytorch.Variable(None)
+    constant = autodiff.Variable(None)
     back = Function1.chain_rule(ctx=None, inputs=[constant, constant], d_output=5)
     assert len(list(back)) == 0
 
 
 def test_chain_rule2():
     "Check that constants are ignored and variables get derivatives."
-    var = tinytorch.Variable(History())
-    constant = tinytorch.Variable(None)
+    var = autodiff.Variable(autodiff.History())
+    constant = autodiff.Variable(None)
     back = Function1.chain_rule(ctx=None, inputs=[var, constant], d_output=5)
     back = list(back)
     assert len(back) == 1
@@ -57,9 +55,9 @@ def test_chain_rule2():
 def test_chain_rule3():
     "Check that constants are ignored and variables get derivatives."
     constant = 10
-    var = tinytorch.Scalar(5)
+    var = Scalar(5)
 
-    ctx = tinytorch.Context()
+    ctx = autodiff.Context()
     Function2.forward(ctx, constant, var.data)
 
     back = Function2.chain_rule(ctx=ctx, inputs=[constant, var], d_output=5)
@@ -72,10 +70,10 @@ def test_chain_rule3():
 
 def test_chain_rule4():
     "Check that two variables get derivatives."
-    var1 = tinytorch.Scalar(5)
-    var2 = tinytorch.Scalar(10)
+    var1 = Scalar(5)
+    var2 = Scalar(10)
 
-    ctx = tinytorch.Context()
+    ctx = autodiff.Context()
     Function2.forward(ctx, var1.data, var2.data)
 
     back = Function2.chain_rule(ctx=ctx, inputs=[var1, var2], d_output=5)
@@ -96,7 +94,7 @@ def test_chain_rule4():
 
 def test_backprop1():
     # Example 1: F1(0, v)
-    var = tinytorch.Scalar(0)
+    var = Scalar(0)
     var2 = Function1.apply(0, var)
     var2.backward(d_output=5)
     assert var.derivative == 5
@@ -104,7 +102,7 @@ def test_backprop1():
 
 def test_backprop2():
     # Example 2: F1(0, 0)
-    var = tinytorch.Scalar(0)
+    var = Scalar(0)
     var2 = Function1.apply(0, var)
     var3 = Function1.apply(0, var2)
     var3.backward(d_output=5)
@@ -113,7 +111,7 @@ def test_backprop2():
 
 def test_backprop3():
     # Example 3: F1(F1(0, v1), F1(0, v1))
-    var1 = tinytorch.Scalar(0)
+    var1 = Scalar(0)
     var2 = Function1.apply(0, var1)
     var3 = Function1.apply(0, var1)
     var4 = Function1.apply(var2, var3)
@@ -123,7 +121,7 @@ def test_backprop3():
 
 def test_backprop4():
     # Example 4: F1(F1(0, v1), F1(0, v1))
-    var0 = tinytorch.Scalar(0)
+    var0 = Scalar(0)
     var1 = Function1.apply(0, var0)
     var2 = Function1.apply(0, var1)
     var3 = Function1.apply(0, var1)

@@ -1,7 +1,7 @@
 import numba
 from numba import cuda
 
-from ..tensor.data import (
+from tinytorch.tensor.data import (
     MAX_DIMS,
     TensorData,
     broadcast_index,

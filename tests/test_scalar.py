@@ -1,11 +1,11 @@
 import pytest
 from hypothesis import given
 
-import tinytorch
-from tinytorch import (MathTestVariable, Scalar, central_difference,
-                       derivative_check, operators)
+from tinytorch import operators
+from tinytorch.scalar import Scalar, central_difference, derivative_check
+from tinytorch.testing import MathTestVariable
 
-from .strategies import assert_close, small_floats, small_scalars
+from tests.strategies import assert_close, small_floats, small_scalars
 
 
 def test_central_diff():
@@ -37,7 +37,7 @@ def test_simple(a, b):
 
     # Simple relu
     c = Scalar(a).relu() + Scalar(b).relu()
-    assert_close(c.data, tinytorch.operators.relu(a) + tinytorch.operators.relu(b))
+    assert_close(c.data, operators.relu(a) + operators.relu(b))
 
     # Add others if you would like...
 

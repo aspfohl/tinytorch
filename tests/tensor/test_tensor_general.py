@@ -5,11 +5,18 @@ import pytest
 from hypothesis import given, settings
 from hypothesis.strategies import data, integers, lists, permutations
 
-import tinytorch
-from tinytorch import MathTestVariable, grad_check
-
-from .strategies import (assert_close, assert_close_tensor, shaped_tensors,
-                         small_floats, tensors)
+from tests.strategies import (
+    assert_close,
+    assert_close_tensor,
+    shaped_tensors,
+    small_floats,
+    tensors,
+)
+from tinytorch.cuda import ops as cuda_ops
+from tinytorch.fast import ops as fast_ops
+from tinytorch.tensor import ops as tensor_ops
+from tinytorch.tensor.functions import grad_check, make_tensor_backend, rand, tensor
+from tinytorch.testing import MathTestVariable
 
 one_arg, two_arg, red_arg = MathTestVariable._tests()
 
@@ -17,8 +24,8 @@ one_arg, two_arg, red_arg = MathTestVariable._tests()
 # The tests in this file only run the main mathematical functions.
 # The difference is that they run with different tensor ops backends.
 
-TensorBackend = tinytorch.make_tensor_backend(tinytorch.TensorOps)
-FastTensorBackend = tinytorch.make_tensor_backend(tinytorch.FastOps)
+TensorBackend = make_tensor_backend(tensor_ops.TensorOps)
+FastTensorBackend = make_tensor_backend(fast_ops.FastOps)
 shared = {"fast": FastTensorBackend}
 
 # todo: combine
@@ -30,14 +37,14 @@ if numba.cuda.is_available():
     backend_tests.append(pytest.param("cuda"))
 
     matmul_tests.append(pytest.param("cuda"))
-    shared["cuda"] = tinytorch.make_tensor_backend(tinytorch.CudaOps, is_cuda=True)
+    shared["cuda"] = make_tensor_backend(cuda_ops.CudaOps, is_cuda=True)
 
 
 @given(lists(small_floats, min_size=1))
 @pytest.mark.parametrize("backend", backend_tests)
 def test_create(backend, t1):
     "Create different tensors."
-    t2 = tinytorch.tensor(t1, backend=shared[backend])
+    t2 = tensor(t1, backend=shared[backend])
     for i in range(len(t1)):
         assert t1[i] == t2[i]
 
@@ -104,49 +111,49 @@ if numba.cuda.is_available():
 
     def test_sum_practice():
         x = [random.random() for i in range(16)]
-        b = tinytorch.tensor(x)
+        b = tensor(x)
         s = b.sum()[0]
-        b2 = tinytorch.tensor(x, backend=shared["cuda"])
-        out = tinytorch.sum_practice(b2)
+        b2 = tensor(x, backend=shared["cuda"])
+        out = cuda_ops.sum_practice(b2)
         assert_close(s, out._storage[0])
 
     def test_sum_practice2():
         x = [random.random() for i in range(64)]
-        b = tinytorch.tensor(x)
+        b = tensor(x)
         s = b.sum()[0]
-        b2 = tinytorch.tensor(x, backend=shared["cuda"])
-        out = tinytorch.sum_practice(b2)
+        b2 = tensor(x, backend=shared["cuda"])
+        out = cuda_ops.sum_practice(b2)
         assert_close(s, out._storage[0] + out._storage[1])
 
     def test_sum_practice3():
         x = [random.random() for i in range(48)]
-        b = tinytorch.tensor(x)
+        b = tensor(x)
         s = b.sum()[0]
-        b2 = tinytorch.tensor(x, backend=shared["cuda"])
-        out = tinytorch.sum_practice(b2)
+        b2 = tensor(x, backend=shared["cuda"])
+        out = cuda_ops.sum_practice(b2)
         assert_close(s, out._storage[0] + out._storage[1])
 
     def test_sum_practice4():
         x = [random.random() for i in range(32)]
-        b = tinytorch.tensor(x)
+        b = tensor(x)
         s = b.sum()[0]
-        b2 = tinytorch.tensor(x, backend=shared["cuda"])
+        b2 = tensor(x, backend=shared["cuda"])
         out = b2.sum(0)
         assert_close(s, out[0])
 
     def test_sum_practice5():
         x = [random.random() for i in range(500)]
-        b = tinytorch.tensor(x)
+        b = tensor(x)
         s = b.sum()[0]
-        b2 = tinytorch.tensor(x, backend=shared["cuda"])
+        b2 = tensor(x, backend=shared["cuda"])
         out = b2.sum(0)
         assert_close(s, out[0])
 
     def test_sum_practice_other_dims():
         x = [[3 * j + i + 1 for i in range(4)] for j in range(3)]
-        b = tinytorch.tensor(x)
+        b = tensor(x)
         s = b.sum(1)
-        b2 = tinytorch.tensor(x, backend=shared["cuda"])
+        b2 = tensor(x, backend=shared["cuda"])
         out = b2.sum(1)
         print(out)
         for i in range(16):
@@ -156,10 +163,10 @@ if numba.cuda.is_available():
     def test_sum_practice_other_dims2():
         x = [[3 * j + i + 1 for i in range(4)] for j in range(3)]
 
-        b = tinytorch.tensor(x)
+        b = tensor(x)
         print(b)
         s = b.sum(0)
-        b2 = tinytorch.tensor(x, backend=shared["cuda"])
+        b2 = tensor(x, backend=shared["cuda"])
         out = b2.sum(0)
         print(out)
         for i in range(4):
@@ -169,13 +176,11 @@ if numba.cuda.is_available():
     def test_mul_practice1():
         x = [[random.random() for i in range(2)] for j in range(2)]
         y = [[random.random() for i in range(2)] for j in range(2)]
-        z = tinytorch.tensor(x, backend=shared["fast"]) @ tinytorch.tensor(
-            y, backend=shared["fast"]
-        )
+        z = tensor(x, backend=shared["fast"]) @ tensor(y, backend=shared["fast"])
 
-        x = tinytorch.tensor(x, backend=shared["cuda"])
-        y = tinytorch.tensor(y, backend=shared["cuda"])
-        z2 = tinytorch.mm_practice(x, y)
+        x = tensor(x, backend=shared["cuda"])
+        y = tensor(y, backend=shared["cuda"])
+        z2 = cuda_ops.mm_practice(x, y)
         for i in range(2):
             for j in range(2):
                 assert_close(z[i, j], z2._storage[2 * i + j])
@@ -183,13 +188,11 @@ if numba.cuda.is_available():
     def test_mul_practice2():
         x = [[random.random() for i in range(32)] for j in range(32)]
         y = [[random.random() for i in range(32)] for j in range(32)]
-        z = tinytorch.tensor(x, backend=shared["fast"]) @ tinytorch.tensor(
-            y, backend=shared["fast"]
-        )
+        z = tensor(x, backend=shared["fast"]) @ tensor(y, backend=shared["fast"])
 
-        x = tinytorch.tensor(x, backend=shared["cuda"])
-        y = tinytorch.tensor(y, backend=shared["cuda"])
-        z2 = tinytorch.mm_practice(x, y)
+        x = tensor(x, backend=shared["cuda"])
+        y = tensor(y, backend=shared["cuda"])
+        z2 = cuda_ops.mm_practice(x, y)
         for i in range(32):
             for j in range(32):
                 assert_close(z[i, j], z2._storage[32 * i + j])
@@ -198,12 +201,10 @@ if numba.cuda.is_available():
         "Small real example"
         x = [[random.random() for i in range(2)] for j in range(2)]
         y = [[random.random() for i in range(2)] for j in range(2)]
-        z = tinytorch.tensor(x, backend=shared["fast"]) @ tinytorch.tensor(
-            y, backend=shared["fast"]
-        )
+        z = tensor(x, backend=shared["fast"]) @ tensor(y, backend=shared["fast"])
 
-        x = tinytorch.tensor(x, backend=shared["cuda"])
-        y = tinytorch.tensor(y, backend=shared["cuda"])
+        x = tensor(x, backend=shared["cuda"])
+        y = tensor(y, backend=shared["cuda"])
         z2 = x @ y
 
         for i in range(2):
@@ -215,12 +216,10 @@ if numba.cuda.is_available():
         size = 33
         x = [[random.random() for i in range(size)] for j in range(size)]
         y = [[random.random() for i in range(size)] for j in range(size)]
-        z = tinytorch.tensor(x, backend=shared["fast"]) @ tinytorch.tensor(
-            y, backend=shared["fast"]
-        )
+        z = tensor(x, backend=shared["fast"]) @ tensor(y, backend=shared["fast"])
 
-        x = tinytorch.tensor(x, backend=shared["cuda"])
-        y = tinytorch.tensor(y, backend=shared["cuda"])
+        x = tensor(x, backend=shared["cuda"])
+        y = tensor(y, backend=shared["cuda"])
         z2 = x @ y
 
         for i in range(size):
@@ -238,12 +237,10 @@ if numba.cuda.is_available():
             [[random.random() for i in range(size)] for j in range(size)]
             for _ in range(2)
         ]
-        z = tinytorch.tensor(x, backend=shared["fast"]) @ tinytorch.tensor(
-            y, backend=shared["fast"]
-        )
+        z = tensor(x, backend=shared["fast"]) @ tensor(y, backend=shared["fast"])
 
-        x = tinytorch.tensor(x, backend=shared["cuda"])
-        y = tinytorch.tensor(y, backend=shared["cuda"])
+        x = tensor(x, backend=shared["cuda"])
+        y = tensor(y, backend=shared["cuda"])
         z2 = x @ y
 
         for b in range(2):
@@ -264,12 +261,10 @@ if numba.cuda.is_available():
             [[random.random() for i in range(size_b)] for j in range(size_in)]
             for _ in range(2)
         ]
-        z = tinytorch.tensor(x, backend=shared["fast"]) @ tinytorch.tensor(
-            y, backend=shared["fast"]
-        )
+        z = tensor(x, backend=shared["fast"]) @ tensor(y, backend=shared["fast"])
 
-        x = tinytorch.tensor(x, backend=shared["cuda"])
-        y = tinytorch.tensor(y, backend=shared["cuda"])
+        x = tensor(x, backend=shared["cuda"])
+        y = tensor(y, backend=shared["cuda"])
         z2 = x @ y
 
         for b in range(2):
@@ -306,12 +301,12 @@ def test_permute(backend, data):
     def permute(a):
         return a.permute(*permutation)
 
-    tinytorch.grad_check(permute, t1)
+    grad_check(permute, t1)
 
 
 def test_mm2():
-    a = tinytorch.rand((2, 3), backend=FastTensorBackend)
-    b = tinytorch.rand((3, 4), backend=FastTensorBackend)
+    a = rand((2, 3), backend=FastTensorBackend)
+    b = rand((3, 4), backend=FastTensorBackend)
     c = a @ b
 
     c2 = (a.view(2, 3, 1) * b.view(1, 3, 4)).sum(1).view(2, 4)
@@ -319,7 +314,7 @@ def test_mm2():
     for ind in c._tensor.indices():
         assert_close(c[ind], c2[ind])
 
-    tinytorch.grad_check(lambda a, b: a @ b, a, b)
+    grad_check(lambda a, b: a @ b, a, b)
 
 
 # Matrix Multiplication

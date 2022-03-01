@@ -1,7 +1,7 @@
 import numpy as np
 from numba import njit, prange
 
-from ..tensor.data import (
+from tinytorch.tensor.data import (
     MAX_DIMS,
     broadcast_index,
     index_to_position,
