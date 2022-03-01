@@ -1,4 +1,4 @@
-import minitorch.operators as operators
+import tinytorch.operators as operators
 
 
 class MathTest:

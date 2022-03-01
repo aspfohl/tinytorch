@@ -1,7 +1,7 @@
-from minitorch.tensor_data import TensorData
+from tinytorch.tensor_data import TensorData
 from project.interface.streamlit_utils import render_function
 import streamlit as st
-from minitorch import index_to_position, operators, to_index, Tensor, TensorFunctions
+from tinytorch import index_to_position, operators, to_index, Tensor, TensorFunctions
 from show_tensor import tensor_figure
 import numpy as np
 import plotly.graph_objects as go

@@ -1,4 +1,4 @@
-import minitorch
+import tinytorch
 import networkx as nx
 
 
@@ -6,9 +6,9 @@ def build_expression(code):
     out = eval(
         code,
         {
-            "x": minitorch.Scalar(1.0, name="x"),
-            "y": minitorch.Scalar(1.0, name="y"),
-            "z": minitorch.Scalar(1.0, name="z"),
+            "x": tinytorch.Scalar(1.0, name="x"),
+            "y": tinytorch.Scalar(1.0, name="y"),
+            "z": tinytorch.Scalar(1.0, name="z"),
         },
     )
     out.name = "out"
@@ -19,9 +19,9 @@ def build_tensor_expression(code):
     out = eval(
         code,
         {
-            "x": minitorch.tensor([[1.0, 2.0, 3.0]], requires_grad=True),
-            "y": minitorch.tensor([[1.0, 2.0, 3.0]], requires_grad=True),
-            "z": minitorch.tensor([[1.0, 2.0, 3.0]], requires_grad=True),
+            "x": tinytorch.tensor([[1.0, 2.0, 3.0]], requires_grad=True),
+            "y": tinytorch.tensor([[1.0, 2.0, 3.0]], requires_grad=True),
+            "z": tinytorch.tensor([[1.0, 2.0, 3.0]], requires_grad=True),
         },
     )
     out.name = "out"
@@ -35,7 +35,7 @@ class GraphBuilder:
         self.intermediates = {}
 
     def get_name(self, x):
-        if not isinstance(x, minitorch.Variable):
+        if not isinstance(x, tinytorch.Variable):
             return "constant %s" % (x,)
         elif len(x.name) > 15:
             if x.name in self.intermediates:
@@ -57,7 +57,7 @@ class GraphBuilder:
             (cur,) = queue[0]
             queue = queue[1:]
 
-            if minitorch.is_constant(cur) or cur.is_leaf():
+            if tinytorch.is_constant(cur) or cur.is_leaf():
                 continue
             else:
                 op = "%s (Op %d)" % (cur.history.last_fn.__name__, self.op_id)
@@ -68,7 +68,7 @@ class GraphBuilder:
                     G.add_edge(self.get_name(input), op, f"{i}")
 
                 for input in cur.history.inputs:
-                    if not isinstance(input, minitorch.Variable):
+                    if not isinstance(input, tinytorch.Variable):
                         continue
                     queue.append([input])
         return G

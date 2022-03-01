@@ -4,14 +4,14 @@ import time
 import streamlit as st
 import graph_builder
 import networkx as nx
-import minitorch
+import tinytorch
 import interface.plots as plots
 
 
 def render_train_interface(
     TrainCls, graph=True, hidden_layer=True, parameter_control=False
 ):
-    datasets_map = minitorch.datasets
+    datasets_map = tinytorch.datasets
     st.write("## Sandbox for Model Training")
 
     st.markdown("### Dataset")

@@ -1,9 +1,9 @@
-from minitorch import central_difference, operators, derivative_check, Scalar
+from tinytorch import central_difference, operators, derivative_check, Scalar
 import pytest
-import minitorch
+import tinytorch
 from hypothesis import given
 from .strategies import small_scalars, small_floats, assert_close
-from minitorch import MathTestVariable
+from tinytorch import MathTestVariable
 
 
 # ## Task 1.1 - Test central difference
@@ -42,7 +42,7 @@ def test_simple(a, b):
 
     # Simple relu
     c = Scalar(a).relu() + Scalar(b).relu()
-    assert_close(c.data, minitorch.operators.relu(a) + minitorch.operators.relu(b))
+    assert_close(c.data, tinytorch.operators.relu(a) + tinytorch.operators.relu(b))
 
     # Add others if you would like...
 
@@ -68,7 +68,7 @@ def test_two_args(fn, t1, t2):
 
 # ## Task 1.4 - Computes checks on each of the derivatives.
 
-# See minitorch.testing for all of the functions checked.
+# See tinytorch.testing for all of the functions checked.
 
 
 @given(small_scalars)

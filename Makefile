@@ -1,5 +1,5 @@
-PROJECT_NAME=minitorch
-PROJECT_DIRS=minitorch tests project
+PROJECT_NAME=tinytorch
+PROJECT_DIRS=tinytorch tests project
 
 venv: clean
 	python3 -m venv .venv

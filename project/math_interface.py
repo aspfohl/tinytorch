@@ -1,13 +1,13 @@
 import streamlit as st
 import networkx as nx
-import minitorch
-from minitorch import MathTest, MathTestVariable
+import tinytorch
+from tinytorch import MathTest, MathTestVariable
 import plotly.graph_objects as go
 import graph_builder
 from interface.streamlit_utils import render_function
 
 MyModule = None
-minitorch
+tinytorch
 
 
 def render_math_sandbox(use_scalar=False, use_tensor=False):
@@ -30,9 +30,9 @@ def render_math_sandbox(use_scalar=False, use_tensor=False):
         xs = [((x / 1.0) - 50.0 + 1e-5) for x in range(1, 100)]
         if use_scalar:
             if use_tensor:
-                ys = [scalar(minitorch.tensor([p]))[0] for p in xs]
+                ys = [scalar(tinytorch.tensor([p]))[0] for p in xs]
             else:
-                ys = [scalar(minitorch.Scalar(p)).data for p in xs]
+                ys = [scalar(tinytorch.Scalar(p)).data for p in xs]
         else:
             ys = [scalar(p) for p in xs]
         scatter = go.Scatter(mode="lines", x=xs, y=ys)
@@ -42,13 +42,13 @@ def render_math_sandbox(use_scalar=False, use_tensor=False):
         if use_scalar:
             st.write("Derivative f'(x)")
             if use_tensor:
-                x_var = [minitorch.tensor(x, requires_grad=True) for x in xs]
+                x_var = [tinytorch.tensor(x, requires_grad=True) for x in xs]
             else:
-                x_var = [minitorch.Scalar(x) for x in xs]
+                x_var = [tinytorch.Scalar(x) for x in xs]
             for x in x_var:
                 out = scalar(x)
                 if use_tensor:
-                    out.backward(minitorch.tensor([1.0]))
+                    out.backward(tinytorch.tensor([1.0]))
                 else:
                     out.backward()
             if use_tensor:
@@ -74,14 +74,14 @@ def render_math_sandbox(use_scalar=False, use_tensor=False):
             if use_tensor:
                 zs = [
                     [
-                        scalar(minitorch.tensor([x]), minitorch.tensor([y]))[0]
+                        scalar(tinytorch.tensor([x]), tinytorch.tensor([y]))[0]
                         for x in xs
                     ]
                     for y in ys
                 ]
             else:
                 zs = [
-                    [scalar(minitorch.Scalar(x), minitorch.Scalar(y)).data for x in xs]
+                    [scalar(tinytorch.Scalar(x), tinytorch.Scalar(y)).data for x in xs]
                     for y in ys
                 ]
         else:
@@ -98,16 +98,16 @@ def render_math_sandbox(use_scalar=False, use_tensor=False):
 
                 if use_tensor:
                     for y in ys:
-                        x1 = minitorch.tensor([x])
-                        y1 = minitorch.tensor([y])
+                        x1 = tinytorch.tensor([x])
+                        y1 = tinytorch.tensor([y])
                         out = scalar(x1, y1)
-                        out.backward(minitorch.tensor([1]))
+                        out.backward(tinytorch.tensor([1]))
                         oa.append((x, y, x1.derivative[0]))
                         ob.append((x, y, y1.derivative[0]))
                 else:
                     for y in ys:
-                        x1 = minitorch.Scalar(x)
-                        y1 = minitorch.Scalar(y)
+                        x1 = tinytorch.Scalar(x)
+                        y1 = tinytorch.Scalar(y)
                         out = scalar(x1, y1)
                         out.backward()
                         oa.append((x, y, x1.derivative))
@@ -141,7 +141,7 @@ def render_math_sandbox(use_scalar=False, use_tensor=False):
             scatter = go.Surface(
                 x=xs,
                 y=ys,
-                z=[[scalar(minitorch.tensor([x, y]))[0] for x in xs] for y in ys],
+                z=[[scalar(tinytorch.tensor([x, y]))[0] for x in xs] for y in ys],
             )
         else:
             scatter = go.Surface(

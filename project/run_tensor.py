@@ -1,17 +1,17 @@
 """
-Be sure you have minitorch installed in you Virtual Env.
+Be sure you have tinytorch installed in you Virtual Env.
 >>> pip install -Ue .
 """
 
-import minitorch
+import tinytorch
 
 
 def RParam(*shape):
-    r = 2 * (minitorch.rand(shape) - 0.5)
-    return minitorch.Parameter(r)
+    r = 2 * (tinytorch.rand(shape) - 0.5)
+    return tinytorch.Parameter(r)
 
 
-class Network(minitorch.Module):
+class Network(tinytorch.Module):
     def __init__(self, hidden_layers):
         super().__init__()
 
@@ -26,7 +26,7 @@ class Network(minitorch.Module):
         return self.layer3.forward(end).sigmoid()
 
 
-class Linear(minitorch.Module):
+class Linear(tinytorch.Module):
     def __init__(self, in_size, out_size):
         super().__init__()
         self.weights = RParam(in_size, out_size)
@@ -49,20 +49,20 @@ class TensorTrain:
         self.model = Network(hidden_layers)
 
     def run_one(self, x):
-        return self.model.forward(minitorch.tensor([x]))
+        return self.model.forward(tinytorch.tensor([x]))
 
     def run_many(self, X):
-        return self.model.forward(minitorch.tensor(X))
+        return self.model.forward(tinytorch.tensor(X))
 
     def train(self, data, learning_rate, max_epochs=500, log_fn=default_log_fn):
 
         self.learning_rate = learning_rate
         self.max_epochs = max_epochs
         self.model = Network(self.hidden_layers)
-        optim = minitorch.SGD(self.model.parameters(), learning_rate)
+        optim = tinytorch.SGD(self.model.parameters(), learning_rate)
 
-        X = minitorch.tensor(data.X)
-        y = minitorch.tensor(data.y)
+        X = tinytorch.tensor(data.X)
+        y = tinytorch.tensor(data.y)
 
         losses = []
         for epoch in range(1, self.max_epochs + 1):
@@ -84,7 +84,7 @@ class TensorTrain:
 
             # Logging
             if epoch % 10 == 0 or epoch == max_epochs:
-                y2 = minitorch.tensor(data.y)
+                y2 = tinytorch.tensor(data.y)
                 correct = int(((out.get_data() > 0.5) == y2).sum()[0])
                 log_fn(epoch, total_loss, correct, losses)
 
@@ -93,5 +93,5 @@ if __name__ == "__main__":
     PTS = 10
     HIDDEN = 3
     RATE = 0.5
-    data = minitorch.datasets["Simple"](PTS)
+    data = tinytorch.datasets["Simple"](PTS)
     TensorTrain(HIDDEN).train(data, RATE)

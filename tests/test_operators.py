@@ -1,8 +1,8 @@
 import pytest
 from hypothesis import given
 from hypothesis.strategies import lists
-from minitorch import MathTest
-from minitorch.operators import (
+from tinytorch import MathTest
+from tinytorch.operators import (
     add,
     addLists,
     eq,

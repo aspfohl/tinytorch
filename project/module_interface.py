@@ -1,9 +1,9 @@
 import streamlit as st
 import networkx as nx
-import minitorch
+import tinytorch
 
 MyModule = None
-minitorch
+tinytorch
 
 
 def render_module_sandbox():
@@ -17,10 +17,10 @@ def render_module_sandbox():
         label="Module code",
         height=600,
         value="""
-class MyModule(minitorch.Module):
+class MyModule(tinytorch.Module):
     def __init__(self):
         super().__init__()
-        self.parameter1 = minitorch.Parameter(15)
+        self.parameter1 = tinytorch.Parameter(15)
 """,
     )
     out = exec(code, globals())

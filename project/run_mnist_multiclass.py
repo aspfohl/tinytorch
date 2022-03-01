@@ -1,12 +1,12 @@
 from mnist import MNIST
-import minitorch
+import tinytorch
 
 
 mndata = MNIST(".data/")
 images, labels = mndata.load_training()
 
 
-BACKEND = minitorch.make_tensor_backend(minitorch.FastOps)
+BACKEND = tinytorch.make_tensor_backend(tinytorch.FastOps)
 BATCH = 16
 
 # Number of classes (10 digits)
@@ -17,11 +17,11 @@ H, W = 28, 28
 
 
 def RParam(*shape):
-    r = 0.1 * (minitorch.rand(shape, backend=BACKEND) - 0.5)
-    return minitorch.Parameter(r)
+    r = 0.1 * (tinytorch.rand(shape, backend=BACKEND) - 0.5)
+    return tinytorch.Parameter(r)
 
 
-class Linear(minitorch.Module):
+class Linear(tinytorch.Module):
     def __init__(self, in_size, out_size):
         super().__init__()
         self.weights = RParam(in_size, out_size)
@@ -35,17 +35,17 @@ class Linear(minitorch.Module):
         ).view(batch, self.out_size) + self.bias.value
 
 
-class Conv2d(minitorch.Module):
+class Conv2d(tinytorch.Module):
     def __init__(self, in_channels, out_channels, kh, kw):
         super().__init__()
         self.weights = RParam(out_channels, in_channels, kh, kw)
         self.bias = RParam(out_channels, 1, 1)
 
     def forward(self, input):
-        return minitorch.conv2d(input, self.weights.value) + self.bias.value
+        return tinytorch.conv2d(input, self.weights.value) + self.bias.value
 
 
-class Network(minitorch.Module):
+class Network(tinytorch.Module):
     """
     Implement a CNN for MNist classification based on LeNet.
 
@@ -81,7 +81,7 @@ class Network(minitorch.Module):
         self.out = self.conv2.forward(self.mid).relu()
 
         # Apply 2D pooling (either Avg or Max) with 4x4 kernel
-        pooled = minitorch.avgpool2d(self.out, (4, 4))
+        pooled = tinytorch.avgpool2d(self.out, (4, 4))
 
         # Flatten channels, height, and width. (Should be size BATCHx392)
         flattened = pooled.view(BATCH, 392)
@@ -89,13 +89,13 @@ class Network(minitorch.Module):
         # Apply a Linear to size 64 followed by a ReLU and Dropout with rate 25
         lineared = self.linear1.forward(flattened).relu()
         if self.training:
-            lineared = minitorch.dropout(lineared, 0.25)
+            lineared = tinytorch.dropout(lineared, 0.25)
 
         # Apply a Linear to size C (number of classes)
         lineared2 = self.linear2.forward(lineared)
 
         # Apply a logsoftmax over the class dimension
-        return minitorch.logsoftmax(lineared2, 1)
+        return tinytorch.logsoftmax(lineared2, 1)
 
 
 def make_mnist(start, stop):
@@ -119,7 +119,7 @@ class ImageTrain:
         self.model = Network()
 
     def run_one(self, x):
-        return self.model.forward(minitorch.tensor([x], backend=BACKEND))
+        return self.model.forward(tinytorch.tensor([x], backend=BACKEND))
 
     def train(
         self, data_train, data_val, learning_rate, max_epochs=500, log_fn=default_log_fn
@@ -129,7 +129,7 @@ class ImageTrain:
         self.model = Network()
         model = self.model
         n_training_samples = len(X_train)
-        optim = minitorch.SGD(self.model.parameters(), learning_rate)
+        optim = tinytorch.SGD(self.model.parameters(), learning_rate)
         losses = []
         for epoch in range(1, max_epochs + 1):
             total_loss = 0.0
@@ -141,10 +141,10 @@ class ImageTrain:
 
                 if n_training_samples - example_num <= BATCH:
                     continue
-                y = minitorch.tensor(
+                y = tinytorch.tensor(
                     y_train[example_num : example_num + BATCH], backend=BACKEND
                 )
-                x = minitorch.tensor(
+                x = tinytorch.tensor(
                     X_train[example_num : example_num + BATCH], backend=BACKEND
                 )
                 x.requires_grad_(True)
@@ -168,10 +168,10 @@ class ImageTrain:
 
             correct = 0
             for val_example_num in range(0, 1 * BATCH, BATCH):
-                y = minitorch.tensor(
+                y = tinytorch.tensor(
                     y_val[val_example_num : val_example_num + BATCH], backend=BACKEND,
                 )
-                x = minitorch.tensor(
+                x = tinytorch.tensor(
                     X_val[val_example_num : val_example_num + BATCH], backend=BACKEND,
                 )
                 out = model.forward(x.view(BATCH, 1, H, W)).view(BATCH, C)

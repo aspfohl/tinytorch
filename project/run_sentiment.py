@@ -1,17 +1,17 @@
-import minitorch
+import tinytorch
 from datasets import load_dataset
 import embeddings
 import random
 
-BACKEND = minitorch.make_tensor_backend(minitorch.FastOps)
+BACKEND = tinytorch.make_tensor_backend(tinytorch.FastOps)
 
 
 def RParam(*shape):
-    r = 0.1 * (minitorch.rand(shape, backend=BACKEND) - 0.5)
-    return minitorch.Parameter(r)
+    r = 0.1 * (tinytorch.rand(shape, backend=BACKEND) - 0.5)
+    return tinytorch.Parameter(r)
 
 
-class Linear(minitorch.Module):
+class Linear(tinytorch.Module):
     def __init__(self, in_size, out_size):
         super().__init__()
         self.weights = RParam(in_size, out_size)
@@ -25,17 +25,17 @@ class Linear(minitorch.Module):
         ).view(batch, self.out_size) + self.bias.value
 
 
-class Conv1d(minitorch.Module):
+class Conv1d(tinytorch.Module):
     def __init__(self, in_channels, out_channels, kernel_width):
         super().__init__()
         self.weights = RParam(out_channels, in_channels, kernel_width)
         self.bias = RParam(1, out_channels, 1)
 
     def forward(self, input):
-        return minitorch.conv1d(input, self.weights.value) + self.bias.value
+        return tinytorch.conv1d(input, self.weights.value) + self.bias.value
 
 
-class CNNSentimentKim(minitorch.Module):
+class CNNSentimentKim(tinytorch.Module):
     """
     Implement a CNN for Sentiment classification based on Y. Kim 2014.
 
@@ -81,16 +81,16 @@ class CNNSentimentKim(minitorch.Module):
         conv3 = self.conv3.forward(embeddings).relu()
 
         # Apply max-over-time across each feature map (batch, feature_map_size, 1)
-        maxed1 = minitorch.max(conv1, 2)
-        maxed2 = minitorch.max(conv2, 2)
-        maxed3 = minitorch.max(conv3, 2)
+        maxed1 = tinytorch.max(conv1, 2)
+        maxed2 = tinytorch.max(conv2, 2)
+        maxed3 = tinytorch.max(conv3, 2)
 
         added = (maxed1 + maxed2 + maxed3).view(batch, self.feature_map_size)
 
         # Apply a linear to size C (batch, 1)
         lineared = self.linear.forward(added)
         if self.training:
-            lineared = minitorch.dropout(lineared, self.dropout)
+            lineared = tinytorch.dropout(lineared, self.dropout)
 
         # Apply a sigmoid (batch,)
         return lineared.view(batch).sigmoid()
@@ -155,7 +155,7 @@ class SentenceSentimentTrain:
         model = self.model
         (X_train, y_train) = data_train
         n_training_samples = len(X_train)
-        optim = minitorch.SGD(self.model.parameters(), learning_rate)
+        optim = tinytorch.SGD(self.model.parameters(), learning_rate)
         losses = []
         train_accuracy = []
         validation_accuracy = []
@@ -168,10 +168,10 @@ class SentenceSentimentTrain:
             for batch_num, example_num in enumerate(
                 range(0, n_training_samples, batch_size)
             ):
-                y = minitorch.tensor(
+                y = tinytorch.tensor(
                     y_train[example_num : example_num + batch_size], backend=BACKEND
                 )
-                x = minitorch.tensor(
+                x = tinytorch.tensor(
                     X_train[example_num : example_num + batch_size], backend=BACKEND
                 )
                 x.requires_grad_(True)
@@ -196,8 +196,8 @@ class SentenceSentimentTrain:
             if data_val is not None:
                 (X_val, y_val) = data_val
                 model.eval()
-                y = minitorch.tensor(y_val, backend=BACKEND,)
-                x = minitorch.tensor(X_val, backend=BACKEND,)
+                y = tinytorch.tensor(y_val, backend=BACKEND,)
+                x = tinytorch.tensor(X_val, backend=BACKEND,)
                 out = model.forward(x)
                 validation_predictions += get_predictions_array(y, out)
                 validation_accuracy.append(get_accuracy(validation_predictions))

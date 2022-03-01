@@ -14,10 +14,10 @@ args = parser.parse_args()
 module_num = args.module_num
 hide_function_defs = args.hide_function_defs
 
-st.set_page_config(page_title="interactive minitorch")
+st.set_page_config(page_title="interactive tinytorch")
 st.sidebar.markdown(
     """
-<h1 style="font-size:30pt; float: left; margin-right: 20px; margin-top: 1px;">MiniTorch</h1>{}
+<h1 style="font-size:30pt; float: left; margin-right: 20px; margin-top: 1px;">TinyTorch</h1>{}
 """.format(
         get_img_tag("https://minitorch.github.io/_images/match.png", width="40")
     ),

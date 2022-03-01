@@ -1,22 +1,22 @@
 """
-Be sure you have minitorch installed in you Virtual Env.
+Be sure you have tinytorch installed in you Virtual Env.
 >>> pip install -Ue .
 """
-import minitorch
+import tinytorch
 import random
 
 
-class Network(minitorch.Module):
+class Network(tinytorch.Module):
     def __init__(self):
         super().__init__()
         self.linear = Linear(2, 1)
 
     def forward(self, x):
         y = self.linear(x)
-        return minitorch.operators.sigmoid(y[0])
+        return tinytorch.operators.sigmoid(y[0])
 
 
-class Linear(minitorch.Module):
+class Linear(tinytorch.Module):
     def __init__(self, in_size, out_size):
         super().__init__()
         random.seed(100)

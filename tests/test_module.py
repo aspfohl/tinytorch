@@ -1,4 +1,4 @@
-import minitorch
+import tinytorch
 import pytest
 from hypothesis import given
 from .strategies import med_ints, small_floats
@@ -9,35 +9,35 @@ from .strategies import med_ints, small_floats
 # ## Website example
 
 # This example builds a module
-# as shown at https://minitorch.github.io/modules.html
+# as shown at https://tinytorch.github.io/modules.html
 # and checks that its properties work.
 
 
-class ModuleA1(minitorch.Module):
+class ModuleA1(tinytorch.Module):
     def __init__(self):
         super().__init__()
-        self.p1 = minitorch.Parameter(5)
+        self.p1 = tinytorch.Parameter(5)
         self.non_param = 10
         self.a = ModuleA2()
         self.b = ModuleA3()
 
 
-class ModuleA2(minitorch.Module):
+class ModuleA2(tinytorch.Module):
     def __init__(self):
         super().__init__()
-        self.p2 = minitorch.Parameter(10)
+        self.p2 = tinytorch.Parameter(10)
 
 
-class ModuleA3(minitorch.Module):
+class ModuleA3(tinytorch.Module):
     def __init__(self):
         super().__init__()
         self.c = ModuleA4()
 
 
-class ModuleA4(minitorch.Module):
+class ModuleA4(tinytorch.Module):
     def __init__(self):
         super().__init__()
-        self.p3 = minitorch.Parameter(15)
+        self.p3 = tinytorch.Parameter(15)
 
 
 @pytest.mark.task0_4
@@ -65,29 +65,29 @@ VAL_A = 50
 VAL_B = 100
 
 
-class Module1(minitorch.Module):
+class Module1(tinytorch.Module):
     def __init__(self, size_a, size_b, val):
         super().__init__()
         self.module_a = Module2(size_a)
         self.module_b = Module2(size_b)
-        self.parameter_a = minitorch.Parameter(val)
+        self.parameter_a = tinytorch.Parameter(val)
 
 
-class Module2(minitorch.Module):
+class Module2(tinytorch.Module):
     def __init__(self, extra=0):
         super().__init__()
-        self.parameter_a = minitorch.Parameter(VAL_A)
-        self.parameter_b = minitorch.Parameter(VAL_B)
+        self.parameter_a = tinytorch.Parameter(VAL_A)
+        self.parameter_b = tinytorch.Parameter(VAL_B)
         self.non_parameter = 10
         self.module_c = Module3()
         for i in range(extra):
             self.add_parameter(f"extra_parameter_{i}", None)
 
 
-class Module3(minitorch.Module):
+class Module3(tinytorch.Module):
     def __init__(self):
         super().__init__()
-        self.parameter_a = minitorch.Parameter(VAL_A)
+        self.parameter_a = tinytorch.Parameter(VAL_A)
 
 
 @pytest.mark.task0_4
@@ -140,7 +140,7 @@ def test_stacked_module(size_a, size_b, val):
 # Check that the module runs forward correctly.
 
 
-class ModuleRun(minitorch.Module):
+class ModuleRun(tinytorch.Module):
     def forward(self):
         return 10
 
@@ -148,7 +148,7 @@ class ModuleRun(minitorch.Module):
 @pytest.mark.task0_4
 @pytest.mark.xfail
 def test_module_fail_forward():
-    mod = minitorch.Module()
+    mod = tinytorch.Module()
     mod()
 
 
@@ -174,7 +174,7 @@ class MockParam:
 
 def test_parameter():
     t = MockParam()
-    q = minitorch.Parameter(t)
+    q = tinytorch.Parameter(t)
     print(q)
     assert t.x
     t2 = MockParam()

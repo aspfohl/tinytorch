@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "minitorch"
+name = "tinytorch"
 version = "0.4.1"
 description = ""
 authors = ["annasmith370 <annalsmith14@gmail.com>"]
