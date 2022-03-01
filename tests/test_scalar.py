@@ -6,10 +6,6 @@ from .strategies import small_scalars, small_floats, assert_close
 from tinytorch import MathTestVariable
 
 
-# ## Task 1.1 - Test central difference
-
-
-@pytest.mark.task1_1
 def test_central_diff():
     d = central_difference(operators.id, 5, arg=0)
     assert_close(d, 1.0)
@@ -25,9 +21,6 @@ def test_central_diff():
 
     d = central_difference(operators.exp, 2, arg=0)
     assert_close(d, operators.exp(2.0))
-
-
-# ## Task 1.2 - Test each of the different function types
 
 
 @given(small_floats, small_floats)
@@ -51,7 +44,6 @@ one_arg, two_arg, _ = MathTestVariable._tests()
 
 
 @given(small_scalars)
-@pytest.mark.task1_2
 @pytest.mark.parametrize("fn", one_arg)
 def test_one_args(fn, t1):
     name, base_fn, scalar_fn = fn
@@ -59,20 +51,16 @@ def test_one_args(fn, t1):
 
 
 @given(small_scalars, small_scalars)
-@pytest.mark.task1_2
 @pytest.mark.parametrize("fn", two_arg)
 def test_two_args(fn, t1, t2):
     name, base_fn, scalar_fn = fn
     assert_close(scalar_fn(t1, t2).data, base_fn(t1.data, t2.data))
 
 
-# ## Task 1.4 - Computes checks on each of the derivatives.
-
 # See tinytorch.testing for all of the functions checked.
 
 
 @given(small_scalars)
-@pytest.mark.task1_4
 @pytest.mark.parametrize("fn", one_arg)
 def test_one_derivative(fn, t1):
     name, _, scalar_fn = fn
@@ -80,7 +68,6 @@ def test_one_derivative(fn, t1):
 
 
 @given(small_scalars, small_scalars)
-@pytest.mark.task1_4
 @pytest.mark.parametrize("fn", two_arg)
 def test_two_derivative(fn, t1, t2):
     name, _, scalar_fn = fn

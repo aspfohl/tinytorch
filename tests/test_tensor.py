@@ -16,7 +16,6 @@ def test_create(t1):
 
 
 @given(tensors())
-@pytest.mark.task2_3
 @pytest.mark.parametrize("fn", one_arg, ids=[i for i, _, _ in one_arg])
 def test_one_args(fn, t1):
     name, base_fn, tensor_fn = fn
@@ -26,7 +25,6 @@ def test_one_args(fn, t1):
 
 
 @given(shaped_tensors(2))
-@pytest.mark.task2_3
 @pytest.mark.parametrize("fn", two_arg, ids=[i for i, _, _ in two_arg])
 def test_two_args(fn, ts):
     name, base_fn, tensor_fn = fn
@@ -37,7 +35,6 @@ def test_two_args(fn, ts):
 
 
 @given(tensors())
-@pytest.mark.task2_4
 @pytest.mark.parametrize("fn", one_arg, ids=[i for i, _, _ in one_arg])
 def test_one_derivative(fn, t1):
     name, _, tensor_fn = fn
@@ -45,7 +42,6 @@ def test_one_derivative(fn, t1):
 
 
 @given(data(), tensors())
-@pytest.mark.task2_4
 def test_permute(data, t1):
     permutation = data.draw(permutations(range(len(t1.shape))))
 
@@ -56,7 +52,6 @@ def test_permute(data, t1):
 
 
 @given(tensors())
-@pytest.mark.task2_4
 @pytest.mark.parametrize("fn", red_arg)
 def test_reduce(fn, t1):
     name, _, tensor_fn = fn
@@ -64,7 +59,6 @@ def test_reduce(fn, t1):
 
 
 @given(shaped_tensors(2))
-@pytest.mark.task2_4
 @pytest.mark.parametrize("fn", two_arg, ids=[i for i, _, _ in two_arg])
 def test_two_grad(fn, ts):
     name, _, tensor_fn = fn
@@ -73,7 +67,6 @@ def test_two_grad(fn, ts):
 
 
 @given(shaped_tensors(2))
-@pytest.mark.task2_4
 @pytest.mark.parametrize("fn", two_arg, ids=[i for i, _, _ in two_arg])
 def test_two_grad_broadcast(fn, ts):
     name, base_fn, tensor_fn = fn
@@ -142,7 +135,6 @@ def test_fromnumpy():
 ## Student Submitted Tests
 
 
-@pytest.mark.task2_3
 def test_reduce_forward_one_dim():
     # shape (3, 2)
     t = tensor([[2, 3], [4, 6], [5, 7]])
@@ -155,7 +147,6 @@ def test_reduce_forward_one_dim():
     assert t_summed.is_close(t_sum_expected).all().item()
 
 
-@pytest.mark.task2_3
 def test_reduce_forward_one_dim_2():
     # shape (3, 2)
     t = tensor([[2, 3], [4, 6], [5, 7]])
@@ -168,7 +159,6 @@ def test_reduce_forward_one_dim_2():
     assert t_summed_2.is_close(t_sum_2_expected).all().item()
 
 
-@pytest.mark.task2_3
 def test_reduce_forward_all_dims():
     # shape (3, 2)
     t = tensor([[2, 3], [4, 6], [5, 7]])

@@ -52,7 +52,6 @@ class Linear(tinytorch.Module):
         return res
 
 
-@pytest.mark.task1_5
 def test_linear_sanity_check():
     """
     todo: this should be in the test directory

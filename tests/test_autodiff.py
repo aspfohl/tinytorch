@@ -2,7 +2,6 @@ import tinytorch
 import pytest
 from tinytorch import History
 
-# ## Task 1.3 - Tests for the autodifferentiation machinery.
 
 # Simple sanity check and debugging tests.
 
@@ -36,7 +35,6 @@ class Function2(tinytorch.ScalarFunction):
 # Checks for the chain rule function.
 
 
-@pytest.mark.task1_3
 def test_chain_rule1():
     "Check that constants are ignored."
     constant = tinytorch.Variable(None)
@@ -44,7 +42,6 @@ def test_chain_rule1():
     assert len(list(back)) == 0
 
 
-@pytest.mark.task1_3
 def test_chain_rule2():
     "Check that constants are ignored and variables get derivatives."
     var = tinytorch.Variable(History())
@@ -57,7 +54,6 @@ def test_chain_rule2():
     assert deriv == 5
 
 
-@pytest.mark.task1_3
 def test_chain_rule3():
     "Check that constants are ignored and variables get derivatives."
     constant = 10
@@ -74,7 +70,6 @@ def test_chain_rule3():
     assert deriv == 5 * 10
 
 
-@pytest.mark.task1_3
 def test_chain_rule4():
     "Check that two variables get derivatives."
     var1 = tinytorch.Scalar(5)
@@ -96,12 +91,9 @@ def test_chain_rule4():
     assert deriv == 5 * 5
 
 
-# ## Task 1.4 - Run some simple backprop tests
-
 # Main tests are in test_scalar.py
 
 
-@pytest.mark.task1_4
 def test_backprop1():
     # Example 1: F1(0, v)
     var = tinytorch.Scalar(0)
@@ -110,7 +102,6 @@ def test_backprop1():
     assert var.derivative == 5
 
 
-@pytest.mark.task1_4
 def test_backprop2():
     # Example 2: F1(0, 0)
     var = tinytorch.Scalar(0)
@@ -120,7 +111,6 @@ def test_backprop2():
     assert var.derivative == 5
 
 
-@pytest.mark.task1_4
 def test_backprop3():
     # Example 3: F1(F1(0, v1), F1(0, v1))
     var1 = tinytorch.Scalar(0)
@@ -131,7 +121,6 @@ def test_backprop3():
     assert var1.derivative == 10
 
 
-@pytest.mark.task1_4
 def test_backprop4():
     # Example 4: F1(F1(0, v1), F1(0, v1))
     var0 = tinytorch.Scalar(0)

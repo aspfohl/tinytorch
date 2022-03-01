@@ -5,12 +5,12 @@ from hypothesis import given, settings
 from .strategies import tensors
 
 BACKEND = {"fast1": tinytorch.Conv1dFun, "fast2": tinytorch.Conv2dFun}
-backend_1d = [pytest.param("fast", marks=pytest.mark.task4_1)]
-backend_2d = [pytest.param("fast", marks=pytest.mark.task4_2)]
+backend_1d = [pytest.param("fast")]
+backend_2d = [pytest.param("fast")]
 
 if numba.cuda.is_available():
-    backend_1d.append(pytest.param("cuda", marks=pytest.mark.task4_1))
-    backend_2d.append(pytest.param("cuda", marks=pytest.mark.task4_2))
+    backend_1d.append(pytest.param("cuda"))
+    backend_2d.append(pytest.param("cuda"))
 
     BACKEND["cuda1"] = tinytorch.CudaConv1dFun
     BACKEND["cuda2"] = tinytorch.CudaConv2dFun

@@ -5,12 +5,9 @@ from .strategies import tensor_data, indices
 import pytest
 from numpy import array, array_equal
 
-# ## Tasks 2.1
-
 # Check basic properties of layout and strides.
 
 
-@pytest.mark.task2_1
 def test_layout():
     "Test basis properties of layout and strides"
     data = [0] * 3 * 5
@@ -37,7 +34,6 @@ def test_layout_bad():
     tinytorch.TensorData(data, (3, 5), (6,))
 
 
-@pytest.mark.task2_1
 @given(tensor_data())
 def test_enumeration(tensor_data):
     "Test enumeration of tensor_datas."
@@ -56,7 +52,6 @@ def test_enumeration(tensor_data):
             assert p < tensor_data.shape[i]
 
 
-@pytest.mark.task2_1
 @given(tensor_data())
 def test_index(tensor_data):
     "Test enumeration of tensor_data."
@@ -76,7 +71,6 @@ def test_index(tensor_data):
             tensor_data.index(tuple(base))
 
 
-@pytest.mark.task2_1
 @given(data())
 def test_permute(data):
     td = data.draw(tensor_data())
@@ -88,13 +82,9 @@ def test_permute(data):
     assert td.index(ind) == td2.index(ind)
 
 
-# ## Tasks 2.2
-
 # Check basic properties of broadcasting.
 
 
-@pytest.mark.task2_2
-@pytest.mark.task2_2
 def test_broadcast_index_smaller():
     "Tests broadcast mapping between higher and lower dim tensors"
     out_index = array([0, 0])
@@ -126,7 +116,6 @@ def test_broadcast_index_smaller():
         assert array_equal(out_index, expected_out_index)
 
 
-@pytest.mark.task2_2
 def test_broadcast_index():
     out_index = array([0, 0])
 
@@ -150,7 +139,6 @@ def test_broadcast_index():
         assert array_equal(out_index, array(expected_out_index))
 
 
-@pytest.mark.task2_2
 def test_broadcast_index_constant():
     out_index = array([0])
 
@@ -168,7 +156,6 @@ def test_broadcast_index_constant():
         assert array_equal(out_index, expected_out_index)
 
 
-@pytest.mark.task2_2
 @pytest.mark.parametrize(
     "shape1, shape2, expected_return",
     (
@@ -184,7 +171,6 @@ def test_shape_broadcast(shape1, shape2, expected_return):
     assert c == expected_return
 
 
-@pytest.mark.task2_2
 @pytest.mark.parametrize(
     "shape1, shape2",
     (
