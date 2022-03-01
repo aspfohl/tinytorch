@@ -3,7 +3,6 @@ from . import operators
 import numpy as np
 
 
-# ## Task 1.1
 # Central Difference calculation
 
 
@@ -32,7 +31,6 @@ def central_difference(f, *vals, arg=0, epsilon=1e-6):
     return (f(*left) - f(*right)) / (2 * epsilon)
 
 
-# ## Task 1.2 and 1.4
 # Scalar Forward and Backward
 
 

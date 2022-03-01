@@ -7,7 +7,6 @@ import math
 
 EPS = 1e-6
 
-# ## Task 0.1
 
 # Implementation of a prelude of elementary functions.
 
@@ -124,8 +123,6 @@ def relu_back(x, d):
     r"If :math:`f = relu` compute d :math:`d \times f'(x)`"
     return d * (1.0 if x > 0.0 else 0.0)
 
-
-# ## Task 0.3
 
 # Small library of elementary higher-order functions for practice.
 
